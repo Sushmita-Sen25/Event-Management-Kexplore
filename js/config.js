@@ -8,8 +8,13 @@
         http://localhost:5173
         https://<username>.github.io
    3. Paste the Client ID below.
+
+   This Client ID authorises the Vercel deployment:
+     https://eventsphere-events.vercel.app
+     https://eventsphere-swart-tau.vercel.app
+     http://localhost:5173 (local development)
    ========================================================= */
 
 window.ES_CONFIG = {
-  GOOGLE_CLIENT_ID: '227222416582-c77rhsqi0n9fc4sk79inffm13e8fcg4e.apps.googleusercontent.com'
+  GOOGLE_CLIENT_ID: '696070150583-k3dma7021md9mmrmun0uoctake289j07.apps.googleusercontent.com'
 };
