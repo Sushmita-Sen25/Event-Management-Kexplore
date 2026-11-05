@@ -808,6 +808,46 @@
     });
   }
 
+  /* ---------- Hero: DriftWall of event photos (React Bits, vanilla port) ---------- */
+  function initHeroWall() {
+    const host = $('#heroWall');
+    if (!host || typeof window.createDriftWall !== 'function') return;
+    const items = EVENTS.map((ev) => ({ id: ev.id, title: ev.name, image: ev.image.replace(/([?&])w=\d+/, '$1w=480') }));
+    const layouts = {
+      sm: { columns: 3, tileWidth: 150, tileHeight: 100, gap: 12 },
+      md: { columns: 4, tileWidth: 180, tileHeight: 120, gap: 14 },
+      lg: { columns: 6, tileWidth: 210, tileHeight: 140, gap: 18 }
+    };
+    let wall = null;
+    let layout = '';
+    const mount = () => {
+      const next = window.innerWidth < 700 ? 'sm' : window.innerWidth < 1100 ? 'md' : 'lg';
+      if (next === layout) return;
+      layout = next;
+      if (wall) wall.destroy();
+      wall = window.createDriftWall(host, Object.assign({
+        items,
+        tilt: 18,
+        turn: -16,
+        speed: 34,
+        dim: 0.74,
+        fade: 0.55,
+        lift: 70,
+        radius: 14,
+        overlayColor: 'var(--dw-overlay-theme)',
+        captions: true,
+        decorative: true, // the same events are fully accessible in the cards below
+        onSelect: (item) => showEventDetails(item.id)
+      }, layouts[next]));
+    };
+    mount();
+    let timer;
+    window.addEventListener('resize', () => {
+      clearTimeout(timer);
+      timer = setTimeout(mount, 200);
+    });
+  }
+
   /* ---------- Init ---------- */
   function refreshAll() {
     renderFeatured();
@@ -827,6 +867,7 @@
     initNavbar();
     renderChips();
     renderHeroNext();
+    initHeroWall();
     refreshAll();
     initFilters();
     initModals();

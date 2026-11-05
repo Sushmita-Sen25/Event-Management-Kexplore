@@ -4,8 +4,25 @@ EventSphere is a modern, fully responsive event management website. You can expl
 
 > **K Explore – Web Designing Task:** Design and Develop a Responsive Event Management Website
 
-🔗 **Live Demo:** https://govindtech-official.github.io/EventSphere/
-📂 **Repository:** https://github.com/govindtech-official/EventSphere
+🔗 **Live Demo:** https://eventsphere-events.vercel.app
+📂 **Repository:** https://github.com/Sushmita-Sen25/Event_mangement_website
+
+---
+
+## 🎨 Design
+
+A moody *neon forest at night* palette, dark mode first (light mode is a soft lavender mist):
+
+| Colour | Hex | Used for |
+| --- | --- | --- |
+| Wine | `#541533` | gradient start, deep accents |
+| Plum | `#722548` | buttons and highlights, light-mode primary |
+| Night | `#221932` | dark-mode cards and surfaces, light-mode text |
+| Ink | `#0B0407` | dark-mode background |
+| Dusk | `#77568B` | gradient end, secondary accent |
+| Lavender | `#9682B9` | dark-mode primary: numbers, countdowns, focus rings |
+
+The hero background is **DriftWall** from [React Bits](https://reactbits.dev) (`npx shadcn@latest add @react-bits/DriftWall-JS-CSS`): an endless perspective wall of the event photos drifting in alternating columns. Hover a tile to lift it and see the event name; click it to open that event's details. Because this site has no framework or build step, the React component was ported to vanilla JavaScript (`js/driftwall.js`) with its original stylesheet (`css/driftwall.css`). It pauses when off-screen, respects *reduced motion*, and is hidden from screen readers, since every event is also available in the cards below.
 
 ---
 
@@ -53,6 +70,7 @@ EventSphere is a modern, fully responsive event management website. You can expl
 - **HTML5**: semantic markup (`header`, `nav`, `main`, `section`, `article`, `footer`) with ARIA labels and roles
 - **CSS3**: custom properties (design tokens), Flexbox, Grid, `clamp()`, scroll-snap, `backdrop-filter`, keyframe animations and media queries
 - **JavaScript (ES6+)**: modules wrapped in an IIFE, event delegation, `IntersectionObserver`, `localStorage` and template literals
+- **DriftWall** (React Bits) hero background, ported to vanilla JS
 - **Git & GitHub** for version control
 
 ## 📁 Project Structure
@@ -61,10 +79,13 @@ EventSphere/
 ├── index.html        # Page structure: navbar, hero, featured, events, form, bookings, modals
 ├── privacy.html      # Privacy policy (linked from the Google consent screen)
 ├── terms.html        # Terms of service
+├── favicon.svg       # Palette favicon
 ├── css/
-│   └── style.css     # All styles: themes, components, animations, responsive breakpoints
+│   ├── style.css     # All styles: themes, components, animations, responsive breakpoints
+│   └── driftwall.css # DriftWall styles (React Bits)
 ├── js/
 │   ├── config.js     # Google OAuth Client ID
+│   ├── driftwall.js  # DriftWall hero wall, vanilla-JS port of the React Bits component
 │   ├── data.js       # Event dataset (12 events) and category icons
 │   └── app.js        # Rendering, search/filter/sort, modals, countdowns, validation, storage
 └── README.md
@@ -108,7 +129,7 @@ Then open http://localhost:5173.
 2. Go to **Settings → Pages**, set the source to the `main` branch and the `/ (root)` folder, then save.
 3. Your site will be live at `https://<username>.github.io/<repo-name>/`.
 
-**Netlify / Vercel:** import the GitHub repo and deploy. There's no build command, and the publish directory is the project root.
+**Netlify / Vercel:** import the GitHub repo and deploy. There's no build command, and the publish directory is the project root. The live site runs on Vercel at https://eventsphere-events.vercel.app.
 
 ## 📱 Responsive breakpoints
 | Width | Layout |

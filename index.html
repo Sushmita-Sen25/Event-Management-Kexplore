@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +8,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#0b0407">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/driftwall.css">
   <script>
     // Apply saved theme before paint to avoid a flash
     (function () {
       try {
-        var t = localStorage.getItem('es-theme') ||
-          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        // Dark is the default look; a saved choice from the theme toggle always wins.
+        var t = localStorage.getItem('es-theme') || 'dark';
         document.documentElement.setAttribute('data-theme', t);
       } catch (e) {}
     })();
@@ -70,9 +73,9 @@
   <main>
     <!-- ========== HERO ========== -->
     <section class="hero" id="home">
-      <div class="hero-bg" aria-hidden="true">
-        <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
-      </div>
+      <!-- DriftWall (React Bits) — a perspective wall of event photos drifting behind the hero -->
+      <div class="hero-wall" id="heroWall"></div>
+      <div class="hero-scrim" aria-hidden="true"></div>
       <div class="container hero-inner">
         <div class="hero-text reveal">
           <span class="pill">🎉 New events added every week</span>
@@ -285,6 +288,7 @@
   <script src="js/config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="js/data.js"></script>
+  <script src="js/driftwall.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
