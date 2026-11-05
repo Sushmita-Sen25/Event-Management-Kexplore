@@ -233,9 +233,8 @@
         pointer.x = (e.clientX - rect.left) / rect.width - 0.5;
         pointer.y = (e.clientY - rect.top) / rect.height - 0.5;
       }
-      const hit = document.elementFromPoint(e.clientX, e.clientY);
-      const tile = hit && hit.closest ? hit.closest('[data-tile-id]') : null;
-      if (tile && container.contains(tile)) setActive(tile);
+      const tile = tileAt(e.clientX, e.clientY);
+      if (tile) setActive(tile);
     }
     function onPointerEnter() {
       wallHovered = true;
@@ -249,8 +248,17 @@
     function select(tile) {
       if (tile && typeof o.onSelect === 'function') o.onSelect(o.items[Number(tile.dataset.index)]);
     }
+    function tileAt(x, y) {
+      const hit = document.elementFromPoint(x, y);
+      const tile = hit && hit.closest ? hit.closest('[data-tile-id]') : null;
+      return tile && container.contains(tile) ? tile : null;
+    }
+    // Inside the 3D-transformed plane the click's own target is often the plane or a
+    // track rather than the tile under the cursor, so resolve the tile the same way
+    // hover does, and fall back to the tile that is currently lifted.
     function onClick(e) {
-      select(e.target.closest && e.target.closest('[data-tile-id]'));
+      const direct = e.target.closest ? e.target.closest('[data-tile-id]') : null;
+      select(direct || tileAt(e.clientX, e.clientY) || activeTile);
     }
     function onFocusIn(e) {
       const tile = e.target.closest('[data-tile-id]');
