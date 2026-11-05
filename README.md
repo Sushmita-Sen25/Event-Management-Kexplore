@@ -1,148 +1,237 @@
-# 🎉 EventSphere – Responsive Event Management Website
+<div align="center">
 
-EventSphere is a modern, fully responsive event management website. You can explore upcoming events, see the full details of each one, and register with a validated form. It's built with **HTML5, CSS3 and vanilla JavaScript**, with no frameworks or build step.
+<img src="frontend/public/favicon.svg" width="56" alt="EventSphere logo" />
 
-> **K Explore – Web Designing Task:** Design and Develop a Responsive Event Management Website
+# EventSphere
 
-🔗 **Live Demo:** https://eventsphere-events.vercel.app
-📂 **Repository:** https://github.com/Sushmita-Sen25/Event_mangement_website
+**Discover, book and manage events across India.**
+A full-stack event platform built with React, Tailwind CSS, Express and MongoDB Atlas.
+
+[**Live site → eventsphere-events.vercel.app**](https://eventsphere-events.vercel.app) ·
+[API health](https://eventsphere-api-dbb6.onrender.com/api/health) ·
+[Screenshots](#-screenshots) ·
+[Run it locally](#%EF%B8%8F-run-it-locally)
+
+![React](https://img.shields.io/badge/React-19-20232a?logo=react)
+![Vite](https://img.shields.io/badge/Vite-8-646cff?logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06b6d4?logo=tailwindcss&logoColor=white)
+![Express](https://img.shields.io/badge/Express-5-000?logo=express)
+![MongoDB Atlas](https://img.shields.io/badge/MongoDB-Atlas-47a248?logo=mongodb&logoColor=white)
+![Vercel](https://img.shields.io/badge/Web-Vercel-000?logo=vercel)
+![Render](https://img.shields.io/badge/API-Render-46e3b7?logo=render&logoColor=black)
+
+<img src="docs/screenshots/home-dark.jpg" alt="EventSphere home page" width="100%" />
+
+</div>
+
+> **K Explore – Web Designing task:** *Design and develop a responsive event management website.*
+> Version 2.0 rebuilds the original HTML/CSS/JavaScript site as a React application with its own API and database.
 
 ---
+
+## Contents
+
+- [Highlights](#-highlights)
+- [Design](#-design)
+- [The brief, point by point](#-the-brief-point-by-point)
+- [Tech stack](#-tech-stack)
+- [Architecture](#%EF%B8%8F-architecture)
+- [Project structure](#%EF%B8%8F-project-structure)
+- [API](#-api)
+- [Run it locally](#%EF%B8%8F-run-it-locally)
+- [Deployment](#%EF%B8%8F-deployment)
+- [Screenshots](#-screenshots)
+
+---
+
+## ✨ Highlights
+
+- **Editorial, professional layout** — serif headlines, hairline grids and a restrained wine-and-lavender palette; dark by default with a light “lavender mist” theme.
+- **DriftWall showcase** — the [React Bits](https://reactbits.dev) DriftWall component turns every upcoming event into a drifting perspective wall. Hover lifts a tile; click opens the event.
+- **Serious filtering** — multi-select categories, date ranges, price bands, city, sorting, grid and calendar views, pagination — all reflected in the URL so results can be shared.
+- **Three-step checkout** — details → seats → review, validated as you type, with an order summary and server-side checks that can’t be bypassed.
+- **Bookings that survive anything** — saved in MongoDB *and* in the browser’s Local Storage, synced with your Google account, exportable to CSV/JSON and importable again.
+- **QR passes** — every booking gets a pass with a QR code, live countdown, calendar export and a print layout.
 
 ## 🎨 Design
 
-A moody *neon forest at night* palette, dark mode first (light mode is a soft lavender mist):
+| Swatch | Name | Hex | Role |
+| --- | --- | --- | --- |
+| ![](https://placehold.co/20x20/541533/541533.png) | Wine | `#541533` | Gradients, glows, pass background |
+| ![](https://placehold.co/20x20/722548/722548.png) | Plum | `#722548` | Primary buttons, active states, light-mode accent |
+| ![](https://placehold.co/20x20/221932/221932.png) | Night | `#221932` | Raised surfaces in dark mode, light-mode text |
+| ![](https://placehold.co/20x20/0B0407/0B0407.png) | Ink | `#0B0407` | Dark-mode canvas |
+| ![](https://placehold.co/20x20/77568B/77568B.png) | Dusk | `#77568B` | Secondary accent, gradient end |
+| ![](https://placehold.co/20x20/9682B9/9682B9.png) | Lavender | `#9682B9` | Dark-mode accent, focus rings, countdowns |
 
-| Colour | Hex | Used for |
-| --- | --- | --- |
-| Wine | `#541533` | gradient start, deep accents |
-| Plum | `#722548` | buttons and highlights, light-mode primary |
-| Night | `#221932` | dark-mode cards and surfaces, light-mode text |
-| Ink | `#0B0407` | dark-mode background |
-| Dusk | `#77568B` | gradient end, secondary accent |
-| Lavender | `#9682B9` | dark-mode primary: numbers, countdowns, focus rings |
+- **Type:** Instrument Serif for headlines (with italics for emphasis), Inter for interface text, JetBrains Mono for numbers, dates and booking references.
+- **Layout:** a 1,240 px grid, 1 px hairline dividers, consistent 20 px radii and generous spacing — closer to a ticketing product than a template.
+- **Motion:** spring-based tab indicators, staggered card entrances, scroll reveals and the DriftWall — all reduced automatically for people who prefer less motion.
+- **DriftWall** was added with `npx shadcn@latest add @react-bits/DriftWall-JS-CSS` (see `frontend/components.json`). Two small, documented additions were made to it: an `onSelect` callback so tiles open their event, and a `decorative` mode that keeps the wall out of the keyboard tab order (every event is also listed below it).
 
-The hero background is **DriftWall** from [React Bits](https://reactbits.dev) (`npx shadcn@latest add @react-bits/DriftWall-JS-CSS`): an endless perspective wall of the event photos drifting in alternating columns. Hover a tile to lift it and see the event name; click it to open that event's details. Because this site has no framework or build step, the React component was ported to vanilla JavaScript (`js/driftwall.js`) with its original stylesheet (`css/driftwall.css`). It pauses when off-screen, respects *reduced motion*, and is hidden from screen readers, since every event is also available in the cards below.
+## ✅ The brief, point by point
 
----
-
-## ✨ Features
-
-### Core requirements
-| Feature | Description |
-|---|---|
-| **Hero section** | Animated gradient background, headline, a search bar that jumps to results, animated stats, and a "Next up" card with a live countdown |
-| **Featured events** | A horizontal slider (scroll-snap with arrow buttons) of hand-picked events |
-| **Event cards** | Each card shows the image, name, date, time, venue, short description, price and how many seats are left |
-| **Search** | Live search by name, venue, city, category or description (debounced) |
-| **Category filter** | Chips for Music, Technology, Workshop, Sports, Food, Art and Business |
-| **Sorting** | Sort by soonest date, price (low to high or high to low) or name |
-| **Event details** | A modal with full info, highlights, organizer, seats left and a **Register Now** button |
-| **Registration form** | Name, email, phone, event, number of tickets and a terms checkbox, with a live total price |
-| **JS form validation** | Inline error messages, invalid fields highlighted with a shake animation, and focus moved to the first invalid field |
-| **Confirmation message** | A success modal with a generated **Ticket ID** and a booking summary |
-| **Responsive design** | Layouts for mobile, tablet and desktop, with a hamburger menu and a bottom-sheet modal on phones |
-
-### 🔑 Login with Google
-- **Google Sign-In is the only login method.** There are no passwords or other providers. It uses [Google Identity Services](https://developers.google.com/identity/gsi/web): the official button plus One Tap.
-- You have to sign in to register. Your **name and email are filled in from your Google account**, and the email can't be edited.
-- **My Bookings** only shows the registrations for the signed-in account. A profile menu in the navbar shows your avatar and has **Sign out**.
-
-### 🏆 Bonus challenges (all implemented)
-- 🌙 **Dark / light mode**: the toggle is saved in Local Storage, follows the OS preference on first visit, and doesn't flash on load
-- ⏳ **Event countdown timers**: live days, hours, minutes and seconds in the hero card and in every event modal
-- 🎞️ **Animations**: scroll-reveal sections, floating blobs, card hover lifts, modal pop-in, animated counters and a loading spinner. Motion is turned off when the user prefers reduced motion
-- 💾 **Local Storage registration management**: bookings are saved and listed under **My Bookings**, can be cancelled, and update the seat counts across the site. The same email can't register twice for one event
+| Requirement | Where |
+| --- | --- |
+| Attractive hero section | `pages/Home.jsx` — editorial headline, search with city filter, popular shortcuts |
+| Upcoming & featured events | DriftWall showcase, *Handpicked for this season* (category tabs), *What’s on, week by week* calendar |
+| Event cards with name, date, venue, image, description | `components/events.jsx` → `EventCard` and `AgendaRow` |
+| Browse, search, filter by category | `pages/Events.jsx` — debounced search, multi-category, date, price, city, sort, grid/list, pagination |
+| Event details with a registration option | `pages/EventDetail.jsx` — overview, schedule, venue map, FAQ, sticky booking card |
+| Form with name, email, phone and selected event | `pages/Checkout.jsx` — event selector, name, email, +91 mobile, optional city, seats |
+| JavaScript form validation | `lib/validation.js` (unit tested) — on blur, live after first touch, per step, focus moves to the first problem |
+| Confirmation message | Success banner, confetti and a QR pass on `/bookings/:reference` |
+| Responsive on phones, tablets and desktops | Mobile menu, slide-over filters, sticky mobile booking bar, fluid type |
+| **Bonus:** dark/light mode | `hooks/theme.jsx` — saved preference, cross-fade via the View Transitions API |
+| **Bonus:** countdown timers | Booking card, *Next up* card, pass page and every upcoming booking |
+| **Bonus:** animations | Motion (Framer Motion), DriftWall, Lenis smooth scrolling |
+| **Bonus:** Local Storage registrations | `lib/bookings-store.js` + My Bookings — view, cancel, sync, export CSV/JSON, import, clear |
+| Git, GitHub, deployment, README | This repository, CI on every push, Vercel + Render + MongoDB Atlas |
 
 ### Validation rules
+
 | Field | Rule |
-|---|---|
-| Full name | Required, at least 3 characters, letters, spaces, dots and hyphens only |
-| Email | Required, valid format (`name@domain.tld`), unique per event |
-| Phone | Required, valid 10-digit Indian mobile number starting with 6–9 (`+91`, spaces and dashes allowed) |
-| Event | Required, and must be upcoming and not sold out |
-| Tickets | 1–5, and no more than the seats left |
-| Terms | Must be accepted |
+| --- | --- |
+| Event | Must be selected; sold-out and past events can’t be booked |
+| Full name | 3–60 characters, letters in any script (incl. Hindi, Bengali, Tamil), spaces, `.` `'` `-` |
+| Email | Valid address, no spaces; one active booking per email per event |
+| Mobile | Indian number, 10 digits starting 6–9; `+91`, `0` and spaces are accepted and normalised |
+| Seats | 1–6, never more than the seats left |
+| Terms | Must be accepted on the review step |
 
----
+The API repeats every check with Zod, and seat reservation is atomic, so two people can’t take the last seat at the same time.
 
-## 🛠️ Tech Stack
-- **HTML5**: semantic markup (`header`, `nav`, `main`, `section`, `article`, `footer`) with ARIA labels and roles
-- **CSS3**: custom properties (design tokens), Flexbox, Grid, `clamp()`, scroll-snap, `backdrop-filter`, keyframe animations and media queries
-- **JavaScript (ES6+)**: modules wrapped in an IIFE, event delegation, `IntersectionObserver`, `localStorage` and template literals
-- **DriftWall** (React Bits) hero background, ported to vanilla JS
-- **Git & GitHub** for version control
+## 🧰 Tech stack
 
-## 📁 Project Structure
+| Layer | Tools |
+| --- | --- |
+| Frontend | React 19, Vite 8, Tailwind CSS 4, React Router 7, TanStack Query 5, Motion, Lenis, Sonner, qrcode.react, canvas-confetti, Lucide icons |
+| UI component | React Bits **DriftWall** (installed with the shadcn CLI) |
+| Backend | Node.js 22, Express 5, Mongoose 9, Zod 4, google-auth-library, JSON Web Tokens, Helmet, express-rate-limit |
+| Database | MongoDB Atlas (AWS Singapore) |
+| Sign-in | Google Identity Services — Sign in with Google button and One Tap |
+| Hosting | Vercel (web + `/api` proxy), Render (API) |
+| Quality | ESLint, Vitest, GitHub Actions |
+
+## 🏗️ Architecture
+
+```mermaid
+flowchart LR
+    B([Browser]) -->|pages & assets| V[Vercel<br/>React app]
+    B -->|/api/* same origin| V
+    V -->|rewrite /api/*| R[Render<br/>Express API]
+    R --> M[(MongoDB Atlas)]
+    B -.->|Sign in with Google| G[Google Identity]
+    R -.->|verify ID token| G
+    B <-->|bookings · theme · profile| L[(Local Storage)]
 ```
-EventSphere/
-├── index.html        # Page structure: navbar, hero, featured, events, form, bookings, modals
-├── privacy.html      # Privacy policy (linked from the Google consent screen)
-├── terms.html        # Terms of service
-├── favicon.svg       # Palette favicon
-├── css/
-│   ├── style.css     # All styles: themes, components, animations, responsive breakpoints
-│   └── driftwall.css # DriftWall styles (React Bits)
-├── js/
-│   ├── config.js     # Google OAuth Client ID
-│   ├── driftwall.js  # DriftWall hero wall, vanilla-JS port of the React Bits component
-│   ├── data.js       # Event dataset (12 events) and category icons
-│   └── app.js        # Rendering, search/filter/sort, modals, countdowns, validation, storage
-└── README.md
+
+- The browser only talks to one origin: Vercel forwards `/api/*` to Render, so the session cookie is first-party and works even where third-party cookies are blocked.
+- Event lists are cached at Vercel’s edge for a few seconds (`s-maxage` + `stale-while-revalidate`), keeping pages fast even while the free API instance wakes up.
+- Local Storage is the offline copy; the API is the source of truth (`POST /api/bookings/lookup` reconciles them).
+
+## 🗂️ Project structure
+
+```
+.
+├── frontend/                 React app (deployed to Vercel)
+│   ├── components.json       shadcn config — used to install DriftWall
+│   ├── public/
+│   └── src/
+│       ├── components/       DriftWall (React Bits), layout, events, showcase, ui kit
+│       ├── hooks/            theme, Google session, data queries, countdown
+│       ├── lib/              api client, validation (+ tests), bookings store, formatting
+│       ├── pages/            Home, Events, EventDetail, Checkout, Bookings, BookingDetail, Legal
+│       └── styles/index.css  design tokens and utilities
+├── backend/                  Express API (deployed to Render)
+│   └── src/
+│       ├── modules/          events · bookings · auth · newsletter
+│       ├── models/           Event, Booking, User, Subscriber
+│       ├── lib/              validation middleware, session cookie, booking references
+│       └── seed/             20 events (the original 12 + 8 new) and the seed script
+├── docs/screenshots/
+├── vercel.json               build settings and the /api rewrite
+└── render.yaml               Render blueprint for the API
 ```
 
-## ⚙️ How it works
-1. **Data:** events are stored as an array of objects in `js/data.js`. To add an event, add an object to the array and the site updates automatically.
-2. **Rendering:** `app.js` builds the cards from the data with template literals. Search, category and sort are kept in one `state` object, and every change re-renders the grid.
-3. **Details modal:** one delegated click listener opens the modal for any card. You can close it with **Esc**, the × button or by clicking the backdrop, and focus is handled for keyboard users.
-4. **Validation:** each field has its own validator function that returns an error message. Fields are checked on blur, re-checked live after an error, and all checked again on submit.
-5. **Storage:** a confirmed registration is saved to `localStorage` under the key `es-registrations`. Seats left are worked out as `total seats − booked tickets`, so cancelling a booking frees the seats.
-6. **Theme:** the `data-theme` attribute on `<html>` switches the CSS variables. A small inline script in `<head>` applies the saved theme before the page is drawn.
+## 🔌 API
 
-## 🔐 Google Sign-In setup (required for login)
-The live site is already configured. Follow these steps only if you fork the project and need your own Client ID.
+Base URL: `https://eventsphere-events.vercel.app/api`
 
-1. Open the [Google Cloud Console → Credentials](https://console.cloud.google.com/apis/credentials) and create or select a project.
-2. Set up the **OAuth consent screen**: choose External and add the app name and your email.
-3. Click **Create credentials → OAuth client ID** and choose the **Web application** type.
-4. Under **Authorized JavaScript origins**, add every URL the site runs on (no paths), for example:
-   - `http://localhost`
-   - `http://localhost:5173`
-   - `https://<username>.github.io`
-5. Copy the Client ID into `js/config.js`:
-   ```js
-   window.ES_CONFIG = { GOOGLE_CLIENT_ID: '1234-abc.apps.googleusercontent.com' };
-   ```
-> Google Sign-In does **not** work from `file://`. Run the site from a local server (see below) or from your deployed URL.
-> The Client ID is public by design, so it's safe to commit. This is a front-end-only demo: the ID token is decoded in the browser, and the sign-in state is kept in Local Storage.
+| Method | Path | Purpose |
+| --- | --- | --- |
+| `GET` | `/health` | Status and database connection |
+| `GET` | `/events` | List events — `q`, `category` (comma-separated), `city`, `price` (`free`, `under-1000`, `1000-2500`, `over-2500`), `when` (`upcoming`, `week`, `month`, `quarter`, `past`, `all`), `sort`, `page`, `limit` |
+| `GET` | `/events/facets` | Category and city counts, season totals |
+| `GET` | `/events/:slug` | One event plus similar events |
+| `POST` | `/bookings` | Book seats `{ eventId, name, email, phone, city?, seats }` |
+| `GET` | `/bookings/:reference` | A booking (contact details masked unless it’s yours) |
+| `POST` | `/bookings/:reference/cancel` | Cancel with `{ email }`, or as the signed-in owner |
+| `POST` | `/bookings/lookup` | Statuses for a list of references (Local Storage sync) |
+| `GET` | `/bookings/mine` | Your bookings (signed in) |
+| `POST` | `/auth/google` | Sign in with a Google ID token `{ credential }` |
+| `GET` · `POST` | `/auth/session` · `/auth/signout` | Current session · sign out |
+| `POST` | `/newsletter` | Subscribe `{ email, interests[] }` |
 
-## 🚀 Run locally
-No installation needed. Just open `index.html` in a browser, or run a local server:
+Validation errors return `422` with per-field messages, for example `{ "message": "Some details need another look", "fields": { "phone": "Enter a valid 10-digit Indian mobile number" } }`.
+
+## 🛠️ Run it locally
+
+You need Node.js 20.12+, a MongoDB connection string and a Google OAuth *Web* client ID with `http://localhost:5173` as an authorised JavaScript origin.
+
 ```bash
-npx http-server -p 5173 .
+git clone https://github.com/Sushmita-Sen25/Event_mangement_website.git
+cd Event_mangement_website
+
+# API
+cd backend
+cp .env.example .env          # fill in DATABASE_URL, SESSION_SECRET, GOOGLE_CLIENT_ID
+npm install
+npm run seed                  # loads the 20 events
+npm run dev                   # http://localhost:5000
+
+# Web app (second terminal)
+cd frontend
+cp .env.example .env.local    # set VITE_GOOGLE_CLIENT_ID
+npm install
+npm run dev                   # http://localhost:5173 — /api is proxied to :5000
 ```
-Then open http://localhost:5173.
 
-## 🌐 Deployment
-**GitHub Pages**
-1. Push the project to a GitHub repository.
-2. Go to **Settings → Pages**, set the source to the `main` branch and the `/ (root)` folder, then save.
-3. Your site will be live at `https://<username>.github.io/<repo-name>/`.
+| Command | Folder | Does |
+| --- | --- | --- |
+| `npm run dev` | both | Start with live reload |
+| `npm run build` | frontend | Production build into `frontend/dist` |
+| `npm run lint` · `npm test` | frontend | ESLint · Vitest unit tests |
+| `npm run seed` · `npm run seed:fresh` | backend | Upsert events · wipe events and bookings, then reseed |
 
-**Netlify / Vercel:** import the GitHub repo and deploy. There's no build command, and the publish directory is the project root. The live site runs on Vercel at https://eventsphere-events.vercel.app.
+## ☁️ Deployment
 
-## 📱 Responsive breakpoints
-| Width | Layout |
-|---|---|
-| > 1024px | Desktop: 3 featured cards per view, two-column hero and form |
-| 600–1024px | Tablet: 2 featured cards, hamburger menu below 900px, stacked hero and form |
-| < 600px | Mobile: swipeable featured cards, single-column form, bottom-sheet modals |
+| Part | Where | Notes |
+| --- | --- | --- |
+| Web app | [Vercel](https://eventsphere-events.vercel.app) | Built from `frontend/` via `vercel.json`; `/api/*` rewritten to Render; `VITE_GOOGLE_CLIENT_ID` set in the project |
+| API | [Render](https://eventsphere-api-dbb6.onrender.com/api/health) | Free web service in Singapore, `rootDir: backend`, health check `/api/health` |
+| Database | MongoDB Atlas | `eventsphere` database with its own least-privilege user |
+| Keep-alive | GitHub Actions | Pings the API every 10 minutes so the free instance stays warm |
 
-## 🔮 Future improvements
-- A backend (Node/Express or Firebase) with real email confirmations
-- An admin panel to create and manage events
-- Payment gateway integration
-- A calendar (.ics) export for booked events
+## 📸 Screenshots
 
----
-Made with ❤️ for **K Explore – Web Designing**. Event images are from [Unsplash](https://unsplash.com).
+| | |
+| --- | --- |
+| ![Home — dark](docs/screenshots/home-dark.jpg) | ![Home — light](docs/screenshots/home-light.jpg) |
+| ![DriftWall showcase](docs/screenshots/showcase-dark.jpg) | ![Featured events](docs/screenshots/featured-dark.jpg) |
+| ![Events with filters](docs/screenshots/events-light.jpg) | ![Event details](docs/screenshots/event-dark.jpg) |
+| ![Checkout](docs/screenshots/checkout-dark.jpg) | ![QR pass](docs/screenshots/pass-dark.jpg) |
+
+<p align="center">
+  <img src="docs/screenshots/mobile-home-dark.jpg" width="240" alt="Mobile home" />
+  &nbsp;
+  <img src="docs/screenshots/mobile-event-light.jpg" width="240" alt="Mobile event page" />
+</p>
+
+## Credits
+
+- DriftWall by [React Bits](https://reactbits.dev) (MIT + Commons Clause).
+- Event photography from [Unsplash](https://unsplash.com); maps © OpenStreetMap contributors.
+- Events, organisers and prices are sample data for this project.
+
+<div align="center"><sub>Built for <b>K Explore — Web Designing</b> · React · Tailwind CSS · Express · MongoDB</sub></div>

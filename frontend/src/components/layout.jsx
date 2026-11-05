@@ -63,7 +63,8 @@ function Account() {
   if (!user) {
     if (!googleReady) return null;
     return (
-      <div className="h-10 overflow-hidden" key={dark ? 'd' : 'l'}>
+      // color-scheme: light stops Chrome painting an opaque white box behind Google's iframe in dark mode.
+      <div className="h-10 overflow-hidden [color-scheme:light]" key={dark ? 'd' : 'l'}>
         <GoogleLogin
           onSuccess={(r) => signIn(r.credential)}
           onError={() => toast.error('Google sign-in was cancelled')}

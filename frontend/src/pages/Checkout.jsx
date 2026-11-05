@@ -220,7 +220,9 @@ export default function Checkout() {
                       {!user && (
                         <div className="flex flex-col gap-3 rounded-xl border border-dashed border-line p-4 sm:flex-row sm:items-center sm:justify-between">
                           <p className="text-sm text-subtle">Sign in with Google to fill this in and keep your bookings on every device.</p>
-                          <GoogleLogin onSuccess={(r) => signIn(r.credential)} theme={dark ? 'filled_black' : 'outline'} shape="pill" size="medium" text="continue_with" />
+                          <div className="[color-scheme:light]">
+                            <GoogleLogin onSuccess={(r) => signIn(r.credential)} theme={dark ? 'filled_black' : 'outline'} shape="pill" size="medium" text="continue_with" />
+                          </div>
                         </div>
                       )}
                       <Field label="Event" id="eventId" error={fieldError('eventId')}>
