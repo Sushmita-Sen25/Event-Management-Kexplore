@@ -11,4 +11,4 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
-      - run: curl -fsS --max-time 60 https://eventsphere-api.onrender.com/api/health || true
+      - run: curl -fsS --max-time 60 https://eventsphere-api-dbb6.onrender.com/api/health || true
