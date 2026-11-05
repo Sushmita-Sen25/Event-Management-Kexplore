@@ -1,0 +1,223 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* ============================================================
+   EventSphere design tokens
+   Palette — wine #541533 · plum #722548 · night #221932 ·
+             ink #0B0407 · dusk #77568B · lavender #9682B9
+   Dark ("after hours") is the default; light is a lavender mist.
+   ============================================================ */
+:root {
+  --canvas: #fbf8fc;
+  --panel: #f4eef7;
+  --raised: #ffffff;
+  --sunken: #efe7f4;
+  --line: rgb(34 25 50 / 0.1);
+  --line-strong: rgb(34 25 50 / 0.2);
+  --text: #221932;
+  --subtle: #66577a;
+  --accent: #722548;
+  --accent-soft: rgb(114 37 72 / 0.08);
+  --cta: #722548;
+  --cta-hover: #541533;
+  --glow: rgb(114 37 72 / 0.22);
+  --success: #2f7d5b;
+  --warning: #a8641c;
+  --danger: #b4234f;
+  --scrim: 251 248 252;
+  --wall-overlay: #fbf8fc;
+  --wall-dim: 0.92;
+  --wall-veil: 0.16;
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --canvas: #0b0407;
+  --panel: #120a12;
+  --raised: #1a1222;
+  --sunken: #221932;
+  --line: rgb(150 130 185 / 0.14);
+  --line-strong: rgb(150 130 185 / 0.28);
+  --text: #f4ecf6;
+  --subtle: #a798b8;
+  --accent: #b7a5d9;
+  --accent-soft: rgb(150 130 185 / 0.12);
+  --cta: #722548;
+  --cta-hover: #8b2f59;
+  --glow: rgb(114 37 72 / 0.5);
+  --success: #6cc49a;
+  --warning: #e7b46a;
+  --danger: #ec7598;
+  --scrim: 11 4 7;
+  --wall-overlay: #0b0407;
+  --wall-dim: 0.72;
+  --wall-veil: 0.42;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-panel: var(--panel);
+  --color-raised: var(--raised);
+  --color-sunken: var(--sunken);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-text: var(--text);
+  --color-subtle: var(--subtle);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-cta: var(--cta);
+  --color-cta-hover: var(--cta-hover);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+}
+
+@theme {
+  --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SFMono-Regular', monospace;
+
+  --color-wine: #541533;
+  --color-plum: #722548;
+  --color-night: #221932;
+  --color-ink: #0b0407;
+  --color-dusk: #77568b;
+  --color-lavender: #9682b9;
+
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-fade-up: fade-up 0.7s var(--ease-smooth) both;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+  --animate-shake: shake 0.4s ease both;
+  --animate-pulse-dot: pulse-dot 2s ease-in-out infinite;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes shimmer {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+  }
+  @keyframes shake {
+    20%, 60% { transform: translateX(-4px); }
+    40%, 80% { transform: translateX(4px); }
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scrollbar-gutter: stable;
+    overflow-x: clip;
+  }
+  body {
+    @apply bg-canvas font-sans text-text antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+    overflow-x: clip;
+  }
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: var(--color-plum);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-lavender);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/* Lenis smooth scrolling */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: clip; }
+
+@utility shell {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 768px) { padding-inline: 2rem; }
+}
+
+/* Editorial display type: Instrument Serif, tight leading */
+@utility display {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.02;
+}
+
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+@utility surface {
+  background: var(--raised);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+}
+
+@utility glass {
+  background: rgb(var(--scrim) / 0.72);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+
+@utility skeleton {
+  background: linear-gradient(90deg, var(--sunken) 0%, var(--panel) 50%, var(--sunken) 100%);
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+  border-radius: 12px;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+/* Soft plum glow used behind hero and CTA sections */
+@utility glow-field {
+  background:
+    radial-gradient(50% 60% at 50% 0%, var(--glow), transparent 70%),
+    radial-gradient(30% 40% at 85% 20%, rgb(119 86 139 / 0.18), transparent 70%);
+}
+
+/* DriftWall: theme-aware resting brightness; lifted tiles get a lavender rim */
+.es-wall .drift-wall__inner { background: var(--color-night); opacity: var(--wall-dim); }
+.es-wall .drift-wall__overlay { opacity: var(--wall-veil); }
+.es-wall .drift-wall__tile.is-active .drift-wall__inner {
+  box-shadow: 0 24px 60px -18px rgb(84 21 51 / 0.85), 0 0 0 1px rgb(150 130 185 / 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff; color: #000; }
+}

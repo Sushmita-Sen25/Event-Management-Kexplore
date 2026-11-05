@@ -1,0 +1,14 @@
+name: Keep API warm
+
+# Render's free plan sleeps after 15 idle minutes; a light ping keeps first loads fast.
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - run: curl -fsS --max-time 60 https://eventsphere-api.onrender.com/api/health || true

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EventSphere — Discover and book events across India</title>
+    <meta name="description" content="EventSphere lists the best concerts, conferences, workshops and festivals across India. Browse, filter and book seats in under a minute." />
+    <meta name="theme-color" content="#0b0407" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+    <meta property="og:title" content="EventSphere — Discover and book events" />
+    <meta property="og:description" content="Concerts, conferences, workshops and festivals across India. Book seats in under a minute." />
+    <meta property="og:type" content="website" />
+    <script>
+      // Apply the saved theme before first paint (dark is the default look).
+      (function () {
+        try {
+          document.documentElement.setAttribute('data-theme', localStorage.getItem('es-theme') || 'dark');
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <noscript>EventSphere needs JavaScript to run.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

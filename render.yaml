@@ -1,0 +1,22 @@
+# Render Blueprint for the EventSphere API
+services:
+  - type: web
+    name: eventsphere-api
+    runtime: node
+    plan: free
+    region: singapore # next to the MongoDB Atlas cluster (AWS ap-southeast-1)
+    rootDir: backend
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: ALLOWED_ORIGINS
+        value: https://eventsphere-events.vercel.app,https://eventsphere-swart-tau.vercel.app

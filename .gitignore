@@ -1,3 +1,15 @@
-﻿.claude/
+# Dependencies & builds
 node_modules/
+dist/
+
+# Secrets — only the .env.example templates are committed
+.env
+.env.*
+!.env.example
+
+# Tooling
+.vercel/
+.claude/
+*.log
 .DS_Store
+Thumbs.db
