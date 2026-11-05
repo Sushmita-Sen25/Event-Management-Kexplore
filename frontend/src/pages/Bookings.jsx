@@ -1,9 +1,12 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { CalendarPlus, Cloud, Download, FileJson, HardDrive, RefreshCw, Ticket, Trash2, Upload, X } from 'lucide-react';
+import { CalendarPlus, Cloud, Download, FileJson, HardDrive, RefreshCw, Ticket, Trash2, Upload } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
 import { toast } from 'sonner';
+import { CancelHold } from '@/components/commit';
+import { GlassTabs } from '@/components/glass';
+import { BrowseButton } from '@/components/specular';
 import { Badge, Button, ButtonLink, Countdown, EmptyState } from '@/components/ui';
 import { useLocalBookings } from '@/hooks/data';
 import { useSession } from '@/hooks/session';
@@ -21,7 +24,6 @@ const TABS = [
 const groupOf = (b) => (b.status === 'cancelled' ? 'cancelled' : new Date(b.event?.endsAt) < new Date() ? 'past' : 'upcoming');
 
 function BookingRow({ booking, onCancel, cancelling }) {
-  const [confirming, setConfirming] = useState(false);
   const group = groupOf(booking);
   const event = booking.event ?? {};
   return (
@@ -59,20 +61,7 @@ function BookingRow({ booking, onCancel, cancelling }) {
               <Button size="sm" variant="outline" onClick={() => addToCalendar(event, booking.reference)}>
                 <CalendarPlus className="size-4" /> Calendar
               </Button>
-              {confirming ? (
-                <div className="flex gap-1">
-                  <Button size="sm" variant="danger" loading={cancelling} onClick={() => onCancel(booking)}>
-                    Confirm
-                  </Button>
-                  <Button size="sm" variant="ghost" onClick={() => setConfirming(false)} aria-label="Keep booking">
-                    <X className="size-4" />
-                  </Button>
-                </div>
-              ) : (
-                <Button size="sm" variant="danger" onClick={() => setConfirming(true)}>
-                  Cancel
-                </Button>
-              )}
+              <CancelHold disabled={cancelling} onHold={() => onCancel(booking)} />
             </>
           )}
         </div>
@@ -211,17 +200,16 @@ export default function Bookings() {
       </section>
 
       <section className="shell py-10">
-        <div role="tablist" aria-label="Booking status" className="flex gap-6 border-b border-line">
-          {TABS.map(([key, label]) => (
-            <button key={key} role="tab" aria-selected={tab === key} onClick={() => setTab(key)} className={cn('relative pb-3 text-sm font-medium', tab === key ? 'text-text' : 'text-subtle hover:text-text')}>
-              {label} <span className="ml-1 font-mono text-xs text-subtle">{groups[key].length}</span>
-              {tab === key && <motion.span layoutId="bookings-tab" className="absolute inset-x-0 -bottom-px h-0.5 bg-lavender" />}
-            </button>
-          ))}
-        </div>
+        <GlassTabs
+          label="Booking status"
+          layoutId="bookings-tab"
+          tabs={TABS.map(([key, label]) => ({ value: key, label, count: groups[key].length }))}
+          value={tab}
+          onChange={setTab}
+        />
         <div className="mt-8">
           {groups[tab].length === 0 ? (
-            <EmptyState icon={Ticket} title={tab === 'upcoming' ? 'No upcoming bookings' : `No ${tab} bookings`} action={<ButtonLink to="/events">Browse events</ButtonLink>}>
+            <EmptyState icon={Ticket} title={tab === 'upcoming' ? 'No upcoming bookings' : `No ${tab} bookings`} action={<BrowseButton size="md" />}>
               {tab === 'upcoming' ? 'When you book an event, your pass appears here — even offline.' : 'Nothing to show here yet.'}
             </EmptyState>
           ) : (

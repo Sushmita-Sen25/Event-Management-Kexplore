@@ -4,7 +4,14 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import globals from 'globals';
 
 export default [
-  { ignores: ['dist', 'node_modules', 'src/components/DriftWall.jsx'] }, // vendored React Bits component
+  // React Bits components are vendored verbatim via the shadcn CLI, so they are not linted.
+  {
+    ignores: [
+      'dist',
+      'node_modules',
+      'src/components/{AnimatedList,DriftWall,GlassSurface,HoldButton,SlideCommit,SpecularButton}.jsx',
+    ],
+  },
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {

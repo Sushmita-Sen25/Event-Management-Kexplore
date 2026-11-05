@@ -48,6 +48,9 @@ A full-stack event platform built with React, Tailwind CSS, Express and MongoDB 
 
 - **Editorial, professional layout** — serif headlines, hairline grids and a restrained wine-and-lavender palette; dark by default with a light “lavender mist” theme.
 - **DriftWall showcase** — the [React Bits](https://reactbits.dev) DriftWall component turns every upcoming event into a drifting perspective wall. Hover lifts a tile; click opens the event.
+- **Liquid-glass navigation** — the floating navbar, every tab bar, the grid/list toggle and the mobile booking bar sit on React Bits GlassSurface, which refracts whatever scrolls underneath.
+- **Calendar you can steer** — *What’s on, week by week* is a React Bits AnimatedList: hover or use ↑/↓ and Enter to move through the next twelve events.
+- **Deliberate commitments** — bookings are confirmed with a slide-to-book control (SlideCommit) and cancelled with a press-and-hold button (HoldButton), so neither can happen by accident.
 - **Serious filtering** — multi-select categories, date ranges, price bands, city, sorting, grid and calendar views, pagination — all reflected in the URL so results can be shared.
 - **Three-step checkout** — details → seats → review, validated as you type, with an order summary and server-side checks that can’t be bypassed.
 - **Bookings that survive anything** — saved in MongoDB *and* in the browser’s Local Storage, synced with your Google account, exportable to CSV/JSON and importable again.
@@ -67,7 +70,18 @@ A full-stack event platform built with React, Tailwind CSS, Express and MongoDB 
 - **Type:** Instrument Serif for headlines (with italics for emphasis), Inter for interface text, JetBrains Mono for numbers, dates and booking references.
 - **Layout:** a 1,240 px grid, 1 px hairline dividers, consistent 20 px radii and generous spacing — closer to a ticketing product than a template.
 - **Motion:** spring-based tab indicators, staggered card entrances, scroll reveals and the DriftWall — all reduced automatically for people who prefer less motion.
-- **DriftWall** was added with `npx shadcn@latest add @react-bits/DriftWall-JS-CSS` (see `frontend/components.json`). Two small, documented additions were made to it: an `onSelect` callback so tiles open their event, and a `decorative` mode that keeps the wall out of the keyboard tab order (every event is also listed below it).
+- **React Bits components** were added with the shadcn CLI (`npx shadcn@latest add @react-bits/<Name>-JS-CSS`, registry in `frontend/components.json`) and are vendored in `frontend/src/components/`. Each one is wrapped in a small themed component so it follows the palette and the light/dark switch:
+
+  | Component | Where it is used | Wrapper |
+  | --- | --- | --- |
+  | DriftWall | Home page showcase wall | `showcase.jsx` |
+  | AnimatedList | *What’s on, week by week* calendar | `agenda.jsx` |
+  | GlassSurface | Navbar, tab bars, view toggle, mobile booking bar | `glass.jsx` |
+  | SpecularButton | *Browse events* and *Find events* buttons | `specular.jsx` |
+  | SlideCommit | Confirming a booking at checkout | `commit.jsx` |
+  | HoldButton | Cancelling a booking in My Bookings | `commit.jsx` |
+
+  Small, commented changes to the vendored code: DriftWall gained an `onSelect` callback and a `decorative` mode, and SpecularButton only releases its WebGL context once its canvas has left the page (React’s StrictMode re-runs effects on the same canvas in development).
 
 ## ✅ The brief, point by point
 
@@ -84,7 +98,7 @@ A full-stack event platform built with React, Tailwind CSS, Express and MongoDB 
 | Responsive on phones, tablets and desktops | Mobile menu, slide-over filters, sticky mobile booking bar, fluid type |
 | **Bonus:** dark/light mode | `hooks/theme.jsx` — saved preference, cross-fade via the View Transitions API |
 | **Bonus:** countdown timers | Booking card, *Next up* card, pass page and every upcoming booking |
-| **Bonus:** animations | Motion (Framer Motion), DriftWall, Lenis smooth scrolling |
+| **Bonus:** animations | Motion (Framer Motion), React Bits (DriftWall, AnimatedList, GlassSurface, SpecularButton, SlideCommit, HoldButton), Lenis smooth scrolling |
 | **Bonus:** Local Storage registrations | `lib/bookings-store.js` + My Bookings — view, cancel, sync, export CSV/JSON, import, clear |
 | Git, GitHub, deployment, README | This repository, CI on every push, Vercel + Render + MongoDB Atlas |
 
@@ -106,7 +120,7 @@ The API repeats every check with Zod, and seat reservation is atomic, so two peo
 | Layer | Tools |
 | --- | --- |
 | Frontend | React 19, Vite 8, Tailwind CSS 4, React Router 7, TanStack Query 5, Motion, Lenis, Sonner, qrcode.react, canvas-confetti, Lucide icons |
-| UI component | React Bits **DriftWall** (installed with the shadcn CLI) |
+| UI components | React Bits **DriftWall, AnimatedList, GlassSurface, SpecularButton, SlideCommit, HoldButton** (installed with the shadcn CLI) |
 | Backend | Node.js 22, Express 5, Mongoose 9, Zod 4, google-auth-library, JSON Web Tokens, Helmet, express-rate-limit |
 | Database | MongoDB Atlas (AWS Singapore) |
 | Sign-in | Google Identity Services — Sign in with Google button and One Tap |
@@ -135,10 +149,10 @@ flowchart LR
 ```
 .
 ├── frontend/                 React app (deployed to Vercel)
-│   ├── components.json       shadcn config — used to install DriftWall
+│   ├── components.json       shadcn config — used to install the React Bits components
 │   ├── public/
 │   └── src/
-│       ├── components/       DriftWall (React Bits), layout, events, showcase, ui kit
+│       ├── components/       React Bits components + themed wrappers, layout, events, ui kit
 │       ├── hooks/            theme, Google session, data queries, countdown
 │       ├── lib/              api client, validation (+ tests), bookings store, formatting
 │       ├── pages/            Home, Events, EventDetail, Checkout, Bookings, BookingDetail, Legal
@@ -230,7 +244,7 @@ npm run dev                   # http://localhost:5173 — /api is proxied to :50
 
 ## Credits
 
-- DriftWall by [React Bits](https://reactbits.dev) (MIT + Commons Clause).
+- DriftWall, AnimatedList, GlassSurface, SpecularButton, SlideCommit and HoldButton by [React Bits](https://reactbits.dev) (MIT + Commons Clause); icons inside SlideCommit from [Hugeicons](https://hugeicons.com).
 - Event photography from [Unsplash](https://unsplash.com); maps © OpenStreetMap contributors.
 - Events, organisers and prices are sample data for this project.
 

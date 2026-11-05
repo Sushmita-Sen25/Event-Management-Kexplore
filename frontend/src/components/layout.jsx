@@ -12,7 +12,9 @@ import { useTheme } from '@/hooks/theme';
 import { api } from '@/lib/api';
 import { checks } from '@/lib/validation';
 import { CATEGORIES, cn } from '@/lib/misc';
-import { Button, ButtonLink, Logo, Sheet, TextInput } from './ui';
+import { Glass, GlassPill } from './glass';
+import { BrowseButton } from './specular';
+import { Button, Logo, Sheet, TextInput } from './ui';
 
 const NAV = [
   { to: '/', label: 'Discover', end: true },
@@ -124,42 +126,44 @@ function Header() {
   const upcoming = bookings.filter((b) => b.status === 'confirmed' && new Date(b.event?.endsAt) > new Date()).length;
   const { pathname } = useLocation();
 
+  const { dark } = useTheme();
+
   useLenis(({ scroll }) => setScrolled(scroll > 8));
   useEffect(() => setMenu(false), [pathname]);
 
   return (
-    <header className={cn('sticky top-0 z-50 border-b transition-colors duration-300', scrolled ? 'glass border-line' : 'border-transparent bg-canvas')}>
-      <div className="shell flex h-16 items-center gap-6">
-        <Logo />
-        <nav aria-label="Main" className="hidden items-center gap-1 md:flex">
-          {NAV.map((item) => (
-            <NavLink key={item.to} to={item.to} end={item.end} className="relative rounded-lg px-3 py-2 text-sm">
-              {({ isActive }) => (
-                <>
-                  <span className={cn('transition-colors', isActive ? 'text-text' : 'text-subtle hover:text-text')}>
-                    {item.label}
-                    {item.to === '/bookings' && upcoming > 0 && (
-                      <span className="ml-1.5 rounded-md bg-accent-soft px-1.5 py-0.5 font-mono text-[11px] text-accent">{upcoming}</span>
-                    )}
-                  </span>
-                  {isActive && <motion.span layoutId="nav-underline" className="absolute inset-x-3 -bottom-[13px] h-0.5 rounded-full bg-lavender" />}
-                </>
-              )}
-            </NavLink>
-          ))}
-        </nav>
-        <div className="ml-auto flex items-center gap-2">
-          <ThemeToggle />
-          <div className="hidden sm:block">
-            <Account />
+    <header className="sticky top-0 z-50 pt-3">
+      <div className="shell">
+        <Glass radius={22} frost={scrolled ? (dark ? 0.62 : 0.68) : dark ? 0.32 : 0.45} className="flex h-16 items-center gap-6 pl-5 pr-2.5">
+          <Logo />
+          <nav aria-label="Main" className="hidden items-center gap-1 md:flex">
+            {NAV.map((item) => (
+              <NavLink key={item.to} to={item.to} end={item.end} className="relative rounded-[14px] px-3.5 py-2 text-sm">
+                {({ isActive }) => (
+                  <>
+                    {isActive && <GlassPill layoutId="nav-pill" />}
+                    <span className={cn('relative transition-colors', isActive ? 'font-medium text-text' : 'text-subtle hover:text-text')}>
+                      {item.label}
+                      {item.to === '/bookings' && upcoming > 0 && (
+                        <span className="ml-1.5 rounded-md bg-accent-soft px-1.5 py-0.5 font-mono text-[11px] text-accent">{upcoming}</span>
+                      )}
+                    </span>
+                  </>
+                )}
+              </NavLink>
+            ))}
+          </nav>
+          <div className="ml-auto flex items-center gap-2">
+            <ThemeToggle />
+            <div className="hidden sm:block">
+              <Account />
+            </div>
+            <BrowseButton className="hidden lg:inline-flex" />
+            <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMenu(true)} aria-label="Open menu">
+              <Menu className="size-5" />
+            </Button>
           </div>
-          <ButtonLink to="/events" size="sm" className="hidden lg:inline-flex">
-            Browse events
-          </ButtonLink>
-          <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMenu(true)} aria-label="Open menu">
-            <Menu className="size-5" />
-          </Button>
-        </div>
+        </Glass>
       </div>
 
       <Sheet open={menu} onClose={() => setMenu(false)} title="Menu">

@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useAnimate } from 'motion/react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router';
 import { toast } from 'sonner';
+import { BookingSlider } from '@/components/commit';
 import { Button, EmptyState, Field, SelectInput, Skeleton, TextInput } from '@/components/ui';
 import { useEvent, useEvents } from '@/hooks/data';
 import { useSession } from '@/hooks/session';
@@ -97,6 +98,8 @@ export default function Checkout() {
   const [touched, setTouched] = useState({});
   const [shakeScope, animateShake] = useAnimate();
   const formRef = useRef(null);
+  const createdRef = useRef(null);
+  const [slideError, setSlideError] = useState('Booking failed');
 
   useEffect(() => {
     if (event) setValues((v) => ({ ...v, eventId: event.id, seats: Math.min(Math.max(1, v.seats), Math.max(1, Math.min(MAX_SEATS, seatsLeft(event)))) }));
@@ -138,7 +141,7 @@ export default function Checkout() {
       queryClient.invalidateQueries({ queryKey: ['events'] });
       queryClient.invalidateQueries({ queryKey: ['event'] });
       queryClient.invalidateQueries({ queryKey: ['facets'] });
-      navigate(`/bookings/${created.reference}?new=1`);
+      createdRef.current = created.reference;
     },
     onError: (err) => {
       if (err.fields) {
@@ -152,7 +155,8 @@ export default function Checkout() {
     },
   });
 
-  const next = () => {
+  /** Validates the current step, marking and focusing the first problem. */
+  const checkStep = () => {
     const fields = STEP_FIELDS[step];
     const found = validate(values, fields, { available });
     if (step === 0 && !found.email) {
@@ -166,10 +170,26 @@ export default function Checkout() {
       animateShake(shakeScope.current, { x: [0, -6, 6, -4, 4, 0] }, { duration: 0.4 });
       const first = fields.find((f) => found[f]);
       formRef.current?.querySelector(`[name="${first}"]`)?.focus();
-      return;
+      return false;
     }
+    return true;
+  };
+
+  const next = () => {
+    if (!checkStep()) return;
     if (step < 2) setStep(step + 1);
-    else booking.mutate();
+    // On the review step the booking is committed by the slider, so Enter just hands focus to it.
+    else formRef.current?.querySelector('[role="slider"]')?.focus();
+  };
+
+  // SlideCommit treats a rejected promise as a failed slide (shake + error label) and a resolved one as done.
+  const confirmBooking = () => {
+    if (!checkStep()) {
+      setSlideError('Accept the terms first');
+      return Promise.reject(new Error('terms'));
+    }
+    setSlideError('Booking failed');
+    return booking.mutateAsync();
   };
 
   if (isPending) {
@@ -335,18 +355,26 @@ export default function Checkout() {
               </AnimatePresence>
             </div>
 
-            <div className="mt-8 flex items-center justify-between gap-3 border-t border-line pt-6">
+            <div className={cn('mt-8 flex gap-3 border-t border-line pt-6', step === 2 ? 'flex-col-reverse sm:flex-row sm:items-center sm:justify-between' : 'items-center justify-between')}>
               {step > 0 ? (
-                <Button variant="ghost" onClick={() => setStep(step - 1)}>
+                <Button variant="ghost" onClick={() => setStep(step - 1)} disabled={booking.isPending || booking.isSuccess} className="self-start sm:self-auto">
                   <ArrowLeft className="size-4" /> Back
                 </Button>
               ) : (
                 <span />
               )}
-              <Button type="submit" size="lg" loading={booking.isPending}>
-                {step < 2 ? 'Continue' : 'Confirm booking'}
-                {!booking.isPending && <ArrowRight className="size-4" />}
-              </Button>
+              {step < 2 ? (
+                <Button type="submit" size="lg">
+                  Continue <ArrowRight className="size-4" />
+                </Button>
+              ) : (
+                <BookingSlider
+                  label={event.price ? `Slide to book · ${formatPrice(event.price * values.seats)}` : 'Slide to book free seats'}
+                  errorLabel={slideError}
+                  onConfirm={confirmBooking}
+                  onDone={() => setTimeout(() => createdRef.current && navigate(`/bookings/${createdRef.current}?new=1`), 700)}
+                />
+              )}
             </div>
           </form>
 

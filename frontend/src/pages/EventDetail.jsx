@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { toast } from 'sonner';
 import { EventCard } from '@/components/events';
+import { Glass, GlassTabs } from '@/components/glass';
 import { Accordion, Badge, Button, ButtonLink, Countdown, EmptyState, SeatMeter, Skeleton } from '@/components/ui';
 import { useEvent, useLocalBookings } from '@/hooks/data';
 import { formatFullDate, formatPrice, formatTimeRange, imageSized, phaseOf, seatsLeft } from '@/lib/format';
@@ -228,14 +229,13 @@ export default function EventDetail() {
 
         <div className="shell mt-12 grid gap-12 pb-28 lg:grid-cols-[1fr_380px] lg:pb-0">
           <div className="min-w-0">
-            <div role="tablist" aria-label="Event information" className="no-scrollbar flex gap-6 overflow-x-auto border-b border-line">
-              {TABS.map((name) => (
-                <button key={name} role="tab" aria-selected={tab === name} onClick={() => setTab(name)} className={cn('relative shrink-0 pb-3 text-sm font-medium transition', tab === name ? 'text-text' : 'text-subtle hover:text-text')}>
-                  {name}
-                  {tab === name && <motion.span layoutId="detail-tab" className="absolute inset-x-0 -bottom-px h-0.5 bg-lavender" />}
-                </button>
-              ))}
-            </div>
+            <GlassTabs
+              label="Event information"
+              layoutId="detail-tab"
+              tabs={TABS.map((name) => ({ value: name, label: name }))}
+              value={tab}
+              onChange={setTab}
+            />
             <AnimatePresence mode="wait">
               <motion.div key={tab} role="tabpanel" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }} className="pt-8">
                 <TabPanel tab={tab} event={event} />
@@ -258,15 +258,17 @@ export default function EventDetail() {
       )}
 
       {phase !== 'ended' && !booking && seatsLeft(event) > 0 && (
-        <div className="glass fixed inset-x-0 bottom-0 z-40 border-t border-line p-3 lg:hidden">
-          <div className="flex items-center gap-3">
-            <div className="min-w-0 flex-1">
-              <p className="font-semibold">{formatPrice(event.price)}</p>
-              <p className="truncate text-xs text-subtle">{seatsLeft(event)} seats left</p>
-            </div>
-            <ButtonLink to={`/checkout/${event.slug}`}>Book seats</ButtonLink>
+        <Glass
+          radius={22}
+          frost={0.7}
+          className="fixed inset-x-3 bottom-[calc(0.75rem+env(safe-area-inset-bottom))] z-40 flex items-center gap-3 p-2 pl-4 lg:hidden"
+        >
+          <div className="min-w-0 flex-1">
+            <p className="font-semibold">{formatPrice(event.price)}</p>
+            <p className="truncate text-xs text-subtle">{seatsLeft(event)} seats left</p>
           </div>
-        </div>
+          <ButtonLink to={`/checkout/${event.slug}`}>Book seats</ButtonLink>
+        </Glass>
       )}
     </>
   );

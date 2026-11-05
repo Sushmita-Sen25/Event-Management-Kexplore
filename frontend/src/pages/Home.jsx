@@ -2,11 +2,14 @@ import { ArrowRight, CalendarSearch, MapPin, Search, ShieldCheck, Ticket } from 
 import { motion } from 'motion/react';
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { AgendaRow, AgendaSkeleton, EventCard, EventCardSkeleton } from '@/components/events';
+import { AgendaList } from '@/components/agenda';
+import { AgendaSkeleton, EventCard, EventCardSkeleton } from '@/components/events';
+import { GlassTabs } from '@/components/glass';
 import { DriftShowcase } from '@/components/showcase';
-import { Accordion, Button, ButtonLink, Reveal, SectionHeading, SelectInput } from '@/components/ui';
+import { ShineButton } from '@/components/specular';
+import { Accordion, ButtonLink, Reveal, SectionHeading, SelectInput } from '@/components/ui';
 import { useEvents, useFacets } from '@/hooks/data';
-import { formatNumber, monthLabel } from '@/lib/format';
+import { formatNumber } from '@/lib/format';
 import { CATEGORIES, cn, FAQS } from '@/lib/misc';
 
 const ease = [0.22, 1, 0.36, 1];
@@ -52,9 +55,9 @@ function SearchBar({ cities }) {
           ))}
         </SelectInput>
       </div>
-      <Button type="submit" size="lg">
-        Find events
-      </Button>
+      <ShineButton type="submit" size="md" className="es-find">
+        <Search className="size-4" aria-hidden /> Find events
+      </ShineButton>
     </form>
   );
 }
@@ -156,20 +159,14 @@ function Featured({ events, loading }) {
           }
         />
       </Reveal>
-      <div role="tablist" aria-label="Filter featured events" className="no-scrollbar mt-8 flex gap-1 overflow-x-auto rounded-xl border border-line bg-panel p-1 sm:inline-flex">
-        {tabs.map((name) => (
-          <button
-            key={name}
-            role="tab"
-            aria-selected={tab === name}
-            onClick={() => setTab(name)}
-            className="relative shrink-0 rounded-lg px-4 py-2 text-sm font-medium"
-          >
-            {tab === name && <motion.span layoutId="featured-tab" className="absolute inset-0 rounded-lg bg-raised shadow-sm ring-1 ring-line" transition={{ type: 'spring', stiffness: 400, damping: 34 }} />}
-            <span className={cn('relative', tab === name ? 'text-text' : 'text-subtle')}>{name}</span>
-          </button>
-        ))}
-      </div>
+      <GlassTabs
+        label="Filter featured events"
+        layoutId="featured-tab"
+        className="mt-8"
+        tabs={tabs.map((name) => ({ value: name, label: name }))}
+        value={tab}
+        onChange={setTab}
+      />
       <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {loading ? Array.from({ length: 6 }, (_, i) => <EventCardSkeleton key={i} />) : shown.map((event, i) => <EventCard key={event.id} event={event} index={i} />)}
       </div>
@@ -178,15 +175,7 @@ function Featured({ events, loading }) {
 }
 
 function Calendar({ events, loading }) {
-  const groups = useMemo(() => {
-    const map = new Map();
-    for (const event of events.slice(0, 8)) {
-      const label = monthLabel(event.startsAt);
-      map.set(label, [...(map.get(label) ?? []), event]);
-    }
-    return [...map.entries()];
-  }, [events]);
-
+  const upcoming = useMemo(() => events.slice(0, 12), [events]);
   return (
     <section className="mt-28 border-y border-line bg-panel py-20" aria-labelledby="calendar-heading">
       <div className="shell grid gap-12 lg:grid-cols-[320px_1fr]">
@@ -195,30 +184,15 @@ function Calendar({ events, loading }) {
           <h2 id="calendar-heading" className="display mt-3 text-4xl sm:text-5xl">
             What’s on, week by week.
           </h2>
-          <p className="mt-4 text-subtle">Every upcoming event in date order, with times in IST. Tap any row for the full details and seat availability.</p>
+          <p className="mt-4 text-subtle">
+            The next {upcoming.length || 'few'} events in date order, with times in IST. Hover or use the arrow keys to move through
+            the list, and pick any row for full details and seat availability.
+          </p>
           <ButtonLink to="/events?view=list" variant="outline" className="mt-6">
             <CalendarSearch className="size-4" /> Open full calendar
           </ButtonLink>
         </Reveal>
-        <div>
-          {loading ? (
-            <AgendaSkeleton />
-          ) : (
-            groups.map(([label, list]) => (
-              <div key={label} className="mb-6 last:mb-0">
-                <p className="mb-1 flex items-center gap-3 px-3 font-mono text-xs uppercase tracking-[0.16em] text-subtle md:px-4">
-                  {label}
-                  <span className="h-px flex-1 bg-line" />
-                </p>
-                <ul>
-                  {list.map((event) => (
-                    <AgendaRow key={event.id} event={event} />
-                  ))}
-                </ul>
-              </div>
-            ))
-          )}
-        </div>
+        <div className="min-w-0">{loading ? <AgendaSkeleton /> : <AgendaList events={upcoming} />}</div>
       </div>
     </section>
   );

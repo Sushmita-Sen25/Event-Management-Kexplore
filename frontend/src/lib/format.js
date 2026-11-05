@@ -48,3 +48,16 @@ export function demandLabel(event) {
 
 /** Narrower Unsplash rendition for thumbnails and cards. */
 export const imageSized = (url, width) => (url?.includes('images.unsplash.com') ? url.replace(/([?&])w=\d+/, `$1w=${width}`) : url);
+
+// Whole IST calendar days between now and the event, for "Tomorrow" / "In 5 days" chips.
+const isoDay = new Intl.DateTimeFormat('en-CA', { ...zone, year: 'numeric', month: '2-digit', day: '2-digit' });
+const dayIndex = (d) => Date.parse(isoDay.format(asDate(d))) / 86_400_000;
+export function relativeDay(d, now = Date.now()) {
+  const diff = Math.round(dayIndex(d) - dayIndex(now));
+  if (diff < 0) return 'Under way';
+  if (diff === 0) return 'Today';
+  if (diff === 1) return 'Tomorrow';
+  if (diff < 7) return `In ${diff} days`;
+  const weeks = Math.round(diff / 7);
+  return weeks === 1 ? 'Next week' : `In ${weeks} weeks`;
+}

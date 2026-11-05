@@ -2,6 +2,7 @@ import { ChevronLeft, ChevronRight, LayoutGrid, List, RotateCcw, Search, SearchX
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import { AgendaRow, AgendaSkeleton, EventCard, EventCardSkeleton } from '@/components/events';
+import { Glass, GlassPill } from '@/components/glass';
 import { Button, EmptyState, SelectInput, Sheet } from '@/components/ui';
 import { useDebounced, useEvents, useFacets } from '@/hooks/data';
 import { CATEGORIES, cn, PRICES, SORTS, WHEN } from '@/lib/misc';
@@ -212,7 +213,7 @@ export default function Events() {
                 ))}
               </SelectInput>
             </div>
-            <div className="flex rounded-xl border border-line p-1" role="group" aria-label="View">
+            <Glass radius={14} className="flex gap-0.5 p-1" role="group" aria-label="View">
               {[
                 ['grid', LayoutGrid, 'Grid view'],
                 ['list', List, 'List view'],
@@ -222,12 +223,13 @@ export default function Events() {
                   onClick={() => set({ view: value }, { keepPage: true })}
                   aria-pressed={view === value}
                   aria-label={label}
-                  className={cn('grid size-9 place-items-center rounded-lg transition', view === value ? 'bg-accent-soft text-accent' : 'text-subtle hover:text-text')}
+                  className={cn('relative grid size-9 place-items-center rounded-[10px] transition-colors', view === value ? 'text-accent' : 'text-subtle hover:text-text')}
                 >
-                  <Icon className="size-4" />
+                  {view === value && <GlassPill layoutId="view-toggle" />}
+                  <Icon className="relative size-4" />
                 </button>
               ))}
-            </div>
+            </Glass>
           </div>
 
           {chips.length > 0 && (

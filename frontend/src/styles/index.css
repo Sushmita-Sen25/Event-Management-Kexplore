@@ -209,6 +209,62 @@ html.lenis, html.lenis body { height: auto; }
   box-shadow: 0 24px 60px -18px rgb(84 21 51 / 0.85), 0 0 0 1px rgb(150 130 185 / 0.6);
 }
 
+/* GlassSurface (React Bits) skin.
+   <Glass> paints the surface in a backdrop layer; everything else in the host sits above it. */
+@layer components {
+  .es-glass-host > :not(.es-glass-bg) {
+    position: relative;
+    z-index: 1;
+  }
+}
+/* Palette-tinted frost instead of pure black/white, plus a light blur so text stays legible over busy imagery.
+   The blur must come before the SVG displacement filter: Chromium drops the whole list when url() is first. */
+.glass-surface.es-glass {
+  background: rgb(var(--scrim) / var(--glass-frost, 0.5));
+}
+.glass-surface--svg.es-glass {
+  -webkit-backdrop-filter: blur(var(--es-glass-blur, 8px)) saturate(var(--glass-saturation, 1));
+  backdrop-filter: blur(var(--es-glass-blur, 8px)) var(--filter-id) saturate(var(--glass-saturation, 1));
+}
+.glass-surface--fallback.es-glass {
+  -webkit-backdrop-filter: blur(calc(var(--es-glass-blur, 10px) + 6px)) saturate(1.5);
+  backdrop-filter: blur(calc(var(--es-glass-blur, 10px) + 6px)) saturate(1.5);
+}
+[data-theme='dark'] .glass-surface.es-glass {
+  box-shadow:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.1),
+    inset 0 0 0 1px rgb(150 130 185 / 0.18),
+    inset 0 0 14px 2px rgb(150 130 185 / 0.08),
+    0 18px 40px -24px rgb(0 0 0 / 0.9);
+}
+:root:not([data-theme='dark']) .glass-surface.es-glass {
+  box-shadow:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.95),
+    inset 0 0 0 1px rgb(34 25 50 / 0.08),
+    inset 0 0 14px 2px rgb(255 255 255 / 0.6),
+    0 18px 40px -26px rgb(84 21 51 / 0.45);
+}
+
+/* SlideCommit (checkout) and HoldButton (cancel) skins */
+.es-slide .slide-commit__track {
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+}
+.es-slide .slide-commit__text--plain {
+  color: var(--subtle);
+}
+.es-slide[data-phase='error'] .slide-commit__text--error {
+  color: var(--danger);
+}
+.es-hold.hold-button {
+  box-shadow: inset 0 0 0 1px rgb(180 35 79 / 0.28);
+}
+/* Hero search: the specular button fills the row on phones */
+.es-find.specular-button {
+  min-height: 44px;
+  padding-block: 0;
+  white-space: nowrap;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
