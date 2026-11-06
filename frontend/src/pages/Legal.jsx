@@ -7,7 +7,7 @@ const PAGES = {
   privacy: {
     title: 'Privacy Policy',
     intro:
-      'EventSphere is a student web-design project for discovering and booking sample events. This policy explains what information the website uses, where it is kept and the choices you have.',
+      'Eventique is a student web-design project for discovering and booking sample events. This policy explains what information the website uses, where it is kept and the choices you have.',
     sections: [
       {
         h: '1. Information we use',
@@ -41,19 +41,19 @@ const PAGES = {
           'Cancel any booking from My Bookings — your seats are released immediately.',
           'Export or clear the bookings stored in your browser from My Bookings.',
           'Sign out at any time from the account menu.',
-          'Remove EventSphere’s access to your Google account at myaccount.google.com/connections.',
+          'Remove Eventique’s access to your Google account at myaccount.google.com/connections.',
         ],
       },
-      { h: '6. Children', text: 'EventSphere is not directed at children under 13.' },
+      { h: '6. Children', text: 'Eventique is not directed at children under 13.' },
     ],
   },
   terms: {
     title: 'Terms of Service',
-    intro: 'By using EventSphere you agree to these terms. If you do not agree, please do not use the website.',
+    intro: 'By using Eventique you agree to these terms. If you do not agree, please do not use the website.',
     sections: [
       {
-        h: '1. About EventSphere',
-        text: 'EventSphere is a student web-design project built for demonstration. Events, prices, venues and seat counts are sample data. A booking reserves a seat in our demo system only — it is not a real ticket, and no payment is processed.',
+        h: '1. About Eventique',
+        text: 'Eventique is a student web-design project built for demonstration. Events, prices, venues and seat counts are sample data. A booking reserves a seat in our demo system only — it is not a real ticket, and no payment is processed.',
       },
       {
         h: '2. Bookings',
@@ -66,7 +66,7 @@ const PAGES = {
       { h: '3. Your account', text: 'Signing in with Google is optional. You are responsible for activity while you are signed in on your device.' },
       { h: '4. Acceptable use', text: 'Do not try to break, overload or misuse the website or its API.' },
       { h: '5. Content', text: 'Event images are provided by Unsplash under the Unsplash License. Venue names are used only to make the sample events realistic.' },
-      { h: '6. No warranty and liability', text: 'The website is provided “as is”, without warranties of any kind. To the extent allowed by law, the EventSphere authors are not liable for any loss arising from its use.' },
+      { h: '6. No warranty and liability', text: 'The website is provided “as is”, without warranties of any kind. To the extent allowed by law, the Eventique authors are not liable for any loss arising from its use.' },
     ],
   },
 };
@@ -76,7 +76,7 @@ export default function Legal({ page }) {
   const other = page === 'privacy' ? ['terms', 'Terms of Service'] : ['privacy', 'Privacy Policy'];
   return (
     <>
-      <title>{`${content.title} · EventSphere`}</title>
+      <title>{`${content.title} · Eventique`}</title>
       <article className="shell max-w-3xl py-14">
         <p className="eyebrow">Legal</p>
         <h1 className="display mt-3 text-5xl sm:text-6xl">{content.title}</h1>

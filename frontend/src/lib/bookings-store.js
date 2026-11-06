@@ -6,7 +6,7 @@
  * POST /api/bookings/lookup, and signing in pulls in bookings made on other devices.
  * Components read the store with `useSyncExternalStore`; other tabs stay in sync via `storage` events.
  */
-const KEY = 'eventsphere.bookings.v2';
+const KEY = 'eventsphere.bookings.v2'; // pre-rename key, kept so existing bookings survive the Eventique rename
 const listeners = new Set();
 
 function read() {
@@ -113,7 +113,7 @@ export function toCsv(bookings) {
 export function parseBackup(text) {
   const data = JSON.parse(text);
   const list = Array.isArray(data) ? data : data?.bookings;
-  if (!Array.isArray(list)) throw new Error('That file isn’t an EventSphere bookings backup');
+  if (!Array.isArray(list)) throw new Error('That file isn’t an Eventique bookings backup');
   return list.filter((b) => /^ES-[A-Z0-9]{6}$/.test(b?.reference) && b?.event?.title);
 }
 

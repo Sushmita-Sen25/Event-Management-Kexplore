@@ -6,7 +6,7 @@ export default function NotFound({ title = 'Page not found' }) {
   return (
     <section>
       <div className="shell grid min-h-[70vh] place-items-center py-20 text-center">
-        <title>Page not found · EventSphere</title>
+        <title>Page not found · Eventique</title>
         <div>
           <p className="text-sm text-subtle">Error 404</p>
           <h1 className="display mt-4 text-5xl sm:text-7xl">{title}</h1>

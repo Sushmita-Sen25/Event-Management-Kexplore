@@ -199,7 +199,7 @@ export default function Home() {
 
   return (
     <>
-      <title>EventSphere · Events across India</title>
+      <title>Eventique · Events across India</title>
       <Hero facets={facets} events={events} loading={isPending} />
       <Featured events={events} loading={isPending} />
       <Calendar events={events} loading={isPending} />

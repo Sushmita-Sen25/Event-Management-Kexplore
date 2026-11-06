@@ -9,7 +9,7 @@ import { cn } from '@/lib/misc';
 
 /* ---------------------------------------------------------------- Button */
 const VARIANTS = {
-  primary: 'bg-cta text-white hover:bg-cta-hover',
+  primary: 'bg-cta text-on-cta hover:bg-cta-hover',
   inverse: 'bg-text text-canvas hover:opacity-90',
   outline: 'border border-line-strong text-text hover:border-text/30 hover:bg-accent-soft',
   ghost: 'text-subtle hover:bg-accent-soft hover:text-text',
@@ -61,7 +61,7 @@ const TONES = {
   success: 'border-success/25 bg-success/10 text-success',
   warning: 'border-warning/25 bg-warning/10 text-warning',
   danger: 'border-danger/25 bg-danger/10 text-danger',
-  solid: 'border-transparent bg-cta text-white',
+  solid: 'border-transparent bg-cta text-on-cta',
 };
 export function Badge({ tone = 'neutral', className, children }) {
   return (
@@ -75,12 +75,12 @@ export function Badge({ tone = 'neutral', className, children }) {
 /** Wordmark: a small solid mark and the name set in the display serif. */
 export function Logo({ className }) {
   return (
-    <Link to="/" className={cn('inline-flex items-center gap-2', className)} aria-label="EventSphere home">
-      <svg viewBox="0 0 20 20" className="size-[18px] text-plum dark:text-lavender" aria-hidden>
+    <Link to="/" className={cn('inline-flex items-center gap-2', className)} aria-label="Eventique home">
+      <svg viewBox="0 0 20 20" className="size-[18px] text-accent" aria-hidden>
         <circle cx="10" cy="10" r="8.25" fill="none" stroke="currentColor" strokeWidth="2.5" />
         <circle cx="10" cy="10" r="3" fill="currentColor" />
       </svg>
-      <span className="display text-[1.6rem] leading-none tracking-[-0.01em]">EventSphere</span>
+      <span className="display text-[1.6rem] leading-none tracking-[-0.01em]">Eventique</span>
     </Link>
   );
 }
@@ -153,7 +153,7 @@ export function Field({ label, error, hint, optional, children, id }) {
 export const inputStyles = (invalid) =>
   cn(
     'h-11 w-full rounded-xl border bg-canvas px-3.5 text-sm text-text outline-none transition placeholder:text-subtle/70',
-    'focus:border-lavender focus:ring-4 focus:ring-lavender/15',
+    'focus:border-hot focus:ring-4 focus:ring-hot/20',
     invalid ? 'border-danger/70 ring-4 ring-danger/10' : 'border-line-strong',
   );
 
@@ -305,7 +305,7 @@ export function SeatMeter({ event, className }) {
       </div>
       <div className="h-1 overflow-hidden rounded-full bg-line">
         <motion.div
-          className={cn('h-full rounded-full', tone === 'danger' ? 'bg-danger' : 'bg-plum dark:bg-lavender')}
+          className={cn('h-full rounded-full', tone === 'danger' ? 'bg-danger' : 'bg-hot')}
           initial={{ width: 0 }}
           whileInView={{ width: `${Math.max(3, share * 100)}%` }}
           viewport={{ once: true }}

@@ -3,7 +3,7 @@ import { createContext, useCallback, useContext, useMemo, useState } from 'react
 const ThemeContext = createContext(null);
 const KEY = 'es-theme'; // same key as the original site, so a saved choice carries over
 
-const initialTheme = () => document.documentElement.getAttribute('data-theme') || 'dark';
+const initialTheme = () => document.documentElement.getAttribute('data-theme') || 'light';
 
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(initialTheme);
@@ -12,7 +12,7 @@ export function ThemeProvider({ children }) {
     const next = theme === 'dark' ? 'light' : 'dark';
     const apply = () => {
       document.documentElement.setAttribute('data-theme', next);
-      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', next === 'dark' ? '#0b0407' : '#fbf8fc');
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', next === 'dark' ? '#150b10' : '#fff6f8');
       setTheme(next);
       try {
         localStorage.setItem(KEY, next);

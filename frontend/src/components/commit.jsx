@@ -40,10 +40,10 @@ export function BookingSlider({ label, errorLabel, onConfirm, onDone, className 
           errorLabel={errorLabel}
           onConfirm={onConfirm}
           onDone={onDone}
-          trackColor={dark ? '#221932' : '#efe7f4'}
-          handleColor="#722548"
+          trackColor={dark ? '#2e1b24' : '#ffe1e8'}
+          handleColor="#FF69B4"
           successColor={dark ? '#3f9b74' : '#2f7d5b'}
-          dangerColor="#b4234f"
+          dangerColor="#FA8072"
           speed={55}
           holdMs={1500}
           className="es-slide"
@@ -65,10 +65,10 @@ export function CancelHold({ onHold, disabled, className }) {
       radius={12}
       holdTime={1400}
       resetAfter={1600}
-      backgroundColor={dark ? '#2a1120' : '#fbe9ef'}
-      fillColor="#b4234f"
-      textColor={dark ? '#ec7598' : '#b4234f'}
-      fillTextColor="#ffffff"
+      backgroundColor={dark ? '#2e1b24' : '#ffe1e8'}
+      fillColor="#FA8072"
+      textColor={dark ? '#FA8072' : '#a82a36'}
+      fillTextColor={dark ? '#1a0b12' : '#2a1320'}
       icon={<XCircle className="size-4" aria-hidden />}
       doneLabel="Cancelling…"
       disabled={disabled}

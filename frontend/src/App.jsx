@@ -37,7 +37,7 @@ function CrashScreen() {
         <h1 className="display mt-3 text-5xl">That wasn’t supposed to happen.</h1>
         <p className="mt-3 text-subtle">{error?.message ?? 'Unknown error'}</p>
         <div className="mt-6 flex justify-center gap-3">
-          <button onClick={() => window.location.reload()} className="h-11 rounded-xl bg-cta px-5 text-white">
+          <button onClick={() => window.location.reload()} className="h-11 rounded-xl bg-cta px-5 text-on-cta">
             Reload
           </button>
           <Link to="/" reloadDocument className="grid h-11 place-items-center rounded-xl border border-line px-5">

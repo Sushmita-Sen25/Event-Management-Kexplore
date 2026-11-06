@@ -1,5 +1,5 @@
 /**
- * Small fetch client for the EventSphere API.
+ * Small fetch client for the Eventique API.
  * Requests go to the same origin (`/api`): Vite proxies it locally and Vercel rewrites it to
  * Render in production, which keeps the session cookie first-party.
  */
@@ -23,7 +23,7 @@ async function request(path, { method = 'GET', body, signal } = {}) {
     });
   } catch (err) {
     if (err.name === 'AbortError') throw err;
-    throw new ApiError(0, 'We couldn’t reach EventSphere. Check your connection and try again.');
+    throw new ApiError(0, 'We couldn’t reach Eventique. Check your connection and try again.');
   }
   const data = await response.json().catch(() => ({}));
   if (!response.ok) {

@@ -143,7 +143,7 @@ export default function Bookings() {
 
   return (
     <>
-      <title>My bookings · EventSphere</title>
+      <title>My bookings · Eventique</title>
       <section className="shell">
         <div className="flex flex-col gap-6 border-b border-line pb-8 pt-14 lg:flex-row lg:items-end lg:justify-between">
           <div>
@@ -161,10 +161,10 @@ export default function Bookings() {
             <Button variant="ghost" size="sm" onClick={() => sync(true)} loading={syncing}>
               {!syncing && <RefreshCw className="size-4" />} Refresh
             </Button>
-            <Button variant="ghost" size="sm" disabled={!bookings.length} onClick={() => download(`eventsphere-bookings-${stamp}.csv`, toCsv(bookings), 'text/csv')}>
+            <Button variant="ghost" size="sm" disabled={!bookings.length} onClick={() => download(`eventique-bookings-${stamp}.csv`, toCsv(bookings), 'text/csv')}>
               <Download className="size-4" /> Export CSV
             </Button>
-            <Button variant="ghost" size="sm" disabled={!bookings.length} onClick={() => download(`eventsphere-bookings-${stamp}.json`, JSON.stringify({ app: 'eventsphere', exportedAt: new Date().toISOString(), bookings }, null, 2), 'application/json')}>
+            <Button variant="ghost" size="sm" disabled={!bookings.length} onClick={() => download(`eventique-bookings-${stamp}.json`, JSON.stringify({ app: 'eventique', exportedAt: new Date().toISOString(), bookings }, null, 2), 'application/json')}>
               <FileJson className="size-4" /> Export JSON
             </Button>
             <Button variant="ghost" size="sm" onClick={() => fileInput.current?.click()}>

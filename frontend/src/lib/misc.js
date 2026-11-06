@@ -61,9 +61,9 @@ export function addToCalendar(event, reference) {
   const ics = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//EventSphere//Bookings//EN',
+    'PRODID:-//Eventique//Bookings//EN',
     'BEGIN:VEVENT',
-    `UID:${reference ?? event.slug}@eventsphere`,
+    `UID:${reference ?? event.slug}@eventique`,
     `DTSTAMP:${icsStamp(new Date())}`,
     `DTSTART:${icsStamp(event.startsAt)}`,
     `DTEND:${icsStamp(event.endsAt)}`,

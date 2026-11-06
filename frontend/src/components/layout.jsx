@@ -67,7 +67,7 @@ function Account() {
         {user.picture ? (
           <img src={user.picture} alt="" referrerPolicy="no-referrer" className="size-7 rounded-full" />
         ) : (
-          <span className="grid size-7 place-items-center rounded-full bg-cta text-xs font-semibold text-white">{user.name[0]}</span>
+          <span className="grid size-7 place-items-center rounded-full bg-cta text-xs font-semibold text-on-cta">{user.name[0]}</span>
         )}
         <span className="hidden max-w-28 truncate text-sm font-medium md:block">{user.name.split(' ')[0]}</span>
       </button>
@@ -279,7 +279,7 @@ function Footer() {
       </div>
       <div className="border-t border-line">
         <div className="shell flex flex-col gap-2 py-6 text-xs text-subtle sm:flex-row sm:justify-between">
-          <p>© {new Date().getFullYear()} EventSphere. A K Explore web design project.</p>
+          <p>© {new Date().getFullYear()} Eventique. A K Explore web design project.</p>
           <p>All times are Indian Standard Time.</p>
         </div>
       </div>
@@ -317,7 +317,7 @@ function ScrollReset() {
 export function PageFallback() {
   return (
     <div className="grid min-h-[60vh] place-items-center" role="status" aria-label="Loading">
-      <span className="size-8 animate-spin rounded-full border-2 border-line border-t-lavender" />
+      <span className="size-8 animate-spin rounded-full border-2 border-line border-t-hot" />
     </div>
   );
 }
@@ -327,7 +327,7 @@ export function RootLayout() {
   const reduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   return (
     <ReactLenis root options={{ lerp: 0.12, smoothWheel: !reduced }}>
-      <a href="#content" className="sr-only z-[100] rounded-lg bg-cta px-4 py-2 text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4">
+      <a href="#content" className="sr-only z-[100] rounded-lg bg-cta px-4 py-2 text-on-cta focus:not-sr-only focus:fixed focus:left-4 focus:top-4">
         Skip to content
       </a>
       <Header />

@@ -28,7 +28,7 @@ export function buildApp() {
     next();
   });
 
-  app.get('/', (_req, res) => res.json({ service: 'EventSphere API', docs: '/api/health' }));
+  app.get('/', (_req, res) => res.json({ service: 'Eventique API', docs: '/api/health' }));
   app.get('/api/health', (_req, res) => {
     res.set('Cache-Control', 'no-store');
     res.json({ ok: true, database: databaseStatus(), uptime: Math.round(process.uptime()) });

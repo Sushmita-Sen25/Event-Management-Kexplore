@@ -3,54 +3,61 @@
 @custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 
 /* ============================================================
-   EventSphere design tokens
-   Palette — wine #541533 · plum #722548 · night #221932 ·
-             ink #0B0407 · dusk #77568B · lavender #9682B9
-   Dark ("after hours") is the default; light is a lavender mist.
+   Eventique design tokens
+   Palette: baby #F4C2C2 · pastel #FFD1DC · cotton candy #FFB7D5 ·
+            orchid #F2BDCD · cherry blossom #FFB7C5 · carnation #FFA6C9 ·
+            melon #FEBAAD · coral #F88379 · salmon #FA8072 ·
+            bubblegum #F58092 · hot #FF69B4 · rose #FF66CC
+   Every swatch is a light pink, so they are used as fills (surfaces,
+   buttons, highlights). Text uses a deep berry ink, and accent text in the
+   light theme is hot pink deepened until it reads at 5.7:1.
+   Light ("blush") is the default; dark ("after hours") uses candy accents.
    ============================================================ */
 :root {
-  --canvas: #fbf8fc;
-  --panel: #f4eef7;
+  --canvas: #fff6f8;
+  --panel: #ffeaef;
   --raised: #ffffff;
-  --sunken: #efe7f4;
-  --line: rgb(34 25 50 / 0.1);
-  --line-strong: rgb(34 25 50 / 0.2);
-  --text: #221932;
-  --subtle: #66577a;
-  --accent: #722548;
-  --accent-soft: rgb(114 37 72 / 0.08);
-  --cta: #722548;
-  --cta-hover: #541533;
-  --glow: rgb(114 37 72 / 0.22);
+  --sunken: #ffe1e8;
+  --line: rgb(74 20 44 / 0.12);
+  --line-strong: rgb(74 20 44 / 0.22);
+  --text: #2a1320;
+  --subtle: #7b5566;
+  --accent: #b8276f;
+  --accent-soft: rgb(255 105 180 / 0.12);
+  --cta: #ff69b4;
+  --cta-hover: #ff66cc;
+  --on-cta: #2a1320;
+  --glow: rgb(255 105 180 / 0.25);
   --success: #2f7d5b;
   --warning: #a8641c;
-  --danger: #b4234f;
-  --scrim: 251 248 252;
-  --wall-overlay: #fbf8fc;
-  --wall-dim: 0.92;
-  --wall-veil: 0.16;
+  --danger: #c2353f;
+  --scrim: 255 246 248;
+  --wall-overlay: #fff6f8;
+  --wall-dim: 0.96;
+  --wall-veil: 0.1;
   color-scheme: light;
 }
 
 [data-theme='dark'] {
-  --canvas: #0b0407;
-  --panel: #120a12;
-  --raised: #1a1222;
-  --sunken: #221932;
-  --line: rgb(150 130 185 / 0.14);
-  --line-strong: rgb(150 130 185 / 0.28);
-  --text: #f4ecf6;
-  --subtle: #a798b8;
-  --accent: #b7a5d9;
-  --accent-soft: rgb(150 130 185 / 0.12);
-  --cta: #722548;
-  --cta-hover: #8b2f59;
-  --glow: rgb(114 37 72 / 0.5);
+  --canvas: #150b10;
+  --panel: #1c1016;
+  --raised: #25161d;
+  --sunken: #2e1b24;
+  --line: rgb(255 183 213 / 0.13);
+  --line-strong: rgb(255 183 213 / 0.24);
+  --text: #ffeef3;
+  --subtle: #c99fb0;
+  --accent: #ffb7d5;
+  --accent-soft: rgb(255 105 180 / 0.14);
+  --cta: #ff69b4;
+  --cta-hover: #ff66cc;
+  --on-cta: #1a0b12;
+  --glow: rgb(255 105 180 / 0.35);
   --success: #6cc49a;
-  --warning: #e7b46a;
-  --danger: #ec7598;
-  --scrim: 11 4 7;
-  --wall-overlay: #0b0407;
+  --warning: #f2b36b;
+  --danger: #fa8072;
+  --scrim: 21 11 16;
+  --wall-overlay: #150b10;
   --wall-dim: 0.86;
   --wall-veil: 0.24;
   color-scheme: dark;
@@ -69,6 +76,7 @@
   --color-accent-soft: var(--accent-soft);
   --color-cta: var(--cta);
   --color-cta-hover: var(--cta-hover);
+  --color-on-cta: var(--on-cta);
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-danger: var(--danger);
@@ -79,12 +87,19 @@
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SFMono-Regular', monospace;
 
-  --color-wine: #541533;
-  --color-plum: #722548;
-  --color-night: #221932;
-  --color-ink: #0b0407;
-  --color-dusk: #77568b;
-  --color-lavender: #9682b9;
+  --color-ink: #1a0b12;
+  --color-baby: #f4c2c2;
+  --color-pastel: #ffd1dc;
+  --color-candy: #ffb7d5;
+  --color-orchid: #f2bdcd;
+  --color-cherry: #ffb7c5;
+  --color-carnation: #ffa6c9;
+  --color-melon: #febaad;
+  --color-coral: #f88379;
+  --color-salmon: #fa8072;
+  --color-bubblegum: #f58092;
+  --color-hot: #ff69b4;
+  --color-rose: #ff66cc;
 
   --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 
@@ -129,11 +144,11 @@
     text-wrap: pretty;
   }
   ::selection {
-    background: var(--color-plum);
-    color: #fff;
+    background: var(--color-hot);
+    color: var(--color-ink);
   }
   :focus-visible {
-    outline: 2px solid var(--color-lavender);
+    outline: 2px solid var(--color-hot);
     outline-offset: 2px;
     border-radius: 8px;
   }
@@ -196,11 +211,11 @@ html.lenis, html.lenis body { height: auto; }
   &::-webkit-scrollbar { display: none; }
 }
 
-/* DriftWall: theme-aware resting brightness; lifted tiles get a lavender rim */
-.es-wall .drift-wall__inner { background: var(--color-night); opacity: var(--wall-dim); }
+/* DriftWall: theme-aware resting brightness; lifted tiles get a cotton-candy rim */
+.es-wall .drift-wall__inner { background: var(--sunken); opacity: var(--wall-dim); }
 .es-wall .drift-wall__overlay { opacity: var(--wall-veil); }
 .es-wall .drift-wall__tile.is-active .drift-wall__inner {
-  box-shadow: 0 24px 60px -18px rgb(84 21 51 / 0.85), 0 0 0 1px rgb(150 130 185 / 0.6);
+  box-shadow: 0 24px 60px -18px rgb(255 105 180 / 0.45), 0 0 0 1px rgb(255 183 213 / 0.85);
 }
 
 /* GlassSurface (React Bits) skin.
@@ -227,16 +242,16 @@ html.lenis, html.lenis body { height: auto; }
 [data-theme='dark'] .glass-surface.es-glass {
   box-shadow:
     inset 0 1px 0 0 rgb(255 255 255 / 0.1),
-    inset 0 0 0 1px rgb(150 130 185 / 0.18),
-    inset 0 0 14px 2px rgb(150 130 185 / 0.08),
+    inset 0 0 0 1px rgb(255 183 213 / 0.16),
+    inset 0 0 14px 2px rgb(255 183 213 / 0.07),
     0 18px 40px -24px rgb(0 0 0 / 0.9);
 }
 :root:not([data-theme='dark']) .glass-surface.es-glass {
   box-shadow:
     inset 0 1px 0 0 rgb(255 255 255 / 0.95),
-    inset 0 0 0 1px rgb(34 25 50 / 0.08),
+    inset 0 0 0 1px rgb(74 20 44 / 0.08),
     inset 0 0 14px 2px rgb(255 255 255 / 0.6),
-    0 18px 40px -26px rgb(84 21 51 / 0.45);
+    0 18px 40px -26px rgb(255 105 180 / 0.5);
 }
 
 /* SlideCommit (checkout) and HoldButton (cancel) skins */
@@ -250,7 +265,7 @@ html.lenis, html.lenis body { height: auto; }
   color: var(--danger);
 }
 .es-hold.hold-button {
-  box-shadow: inset 0 0 0 1px rgb(180 35 79 / 0.28);
+  box-shadow: inset 0 0 0 1px rgb(250 128 114 / 0.45);
 }
 /* Hero search: the specular button fills the row on phones */
 .es-find.specular-button {

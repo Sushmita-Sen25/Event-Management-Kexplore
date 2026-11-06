@@ -195,7 +195,7 @@ export default function EventDetail() {
 
   return (
     <>
-      <title>{`${event.title} · EventSphere`}</title>
+      <title>{`${event.title} · Eventique`}</title>
       <meta name="description" content={event.summary} />
       <article>
         <header className="shell pt-12">

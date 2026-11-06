@@ -40,7 +40,7 @@ function FilterPanel({ get, set, facets }) {
         <div className="space-y-1">
           {CATEGORIES.map(({ name }) => (
             <label key={name} className="flex cursor-pointer items-center gap-3 rounded-lg px-2 py-1.5 text-sm hover:bg-accent-soft">
-              <input type="checkbox" checked={selected.includes(name)} onChange={() => toggleCategory(name)} className="size-4 accent-[#722548]" />
+              <input type="checkbox" checked={selected.includes(name)} onChange={() => toggleCategory(name)} className="size-4 accent-[#ff69b4]" />
               <span className="flex-1">{name}</span>
               <span className="text-xs tabular-nums text-subtle">{counts[name] ?? 0}</span>
             </label>
@@ -53,7 +53,7 @@ function FilterPanel({ get, set, facets }) {
         <div className="space-y-1">
           {WHEN.map((option) => (
             <label key={option.value} className="flex cursor-pointer items-center gap-3 rounded-lg px-2 py-1.5 text-sm hover:bg-accent-soft">
-              <input type="radio" name="when" checked={get('when') === option.value} onChange={() => set({ when: option.value })} className="size-4 accent-[#722548]" />
+              <input type="radio" name="when" checked={get('when') === option.value} onChange={() => set({ when: option.value })} className="size-4 accent-[#ff69b4]" />
               {option.label}
             </label>
           ))}
@@ -65,7 +65,7 @@ function FilterPanel({ get, set, facets }) {
         <div className="space-y-1">
           {PRICES.map((option) => (
             <label key={option.value || 'any'} className="flex cursor-pointer items-center gap-3 rounded-lg px-2 py-1.5 text-sm hover:bg-accent-soft">
-              <input type="radio" name="price" checked={get('price') === option.value} onChange={() => set({ price: option.value })} className="size-4 accent-[#722548]" />
+              <input type="radio" name="price" checked={get('price') === option.value} onChange={() => set({ price: option.value })} className="size-4 accent-[#ff69b4]" />
               {option.label}
             </label>
           ))}
@@ -159,7 +159,7 @@ export default function Events() {
 
   return (
     <>
-      <title>{`Events · EventSphere`}</title>
+      <title>{`Events · Eventique`}</title>
       <section className="shell pt-12">
         <nav aria-label="Breadcrumb" className="text-sm text-subtle">
           <Link to="/" className="hover:text-text">
@@ -187,7 +187,7 @@ export default function Events() {
 
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-3">
-            <label className="flex h-11 min-w-0 flex-1 items-center gap-2.5 rounded-[10px] border border-line-strong bg-canvas px-3.5 focus-within:border-lavender focus-within:ring-4 focus-within:ring-lavender/15">
+            <label className="flex h-11 min-w-0 flex-1 items-center gap-2.5 rounded-[10px] border border-line-strong bg-canvas px-3.5 focus-within:border-hot focus-within:ring-4 focus-within:ring-hot/20">
               <Search className="size-4 shrink-0 text-subtle" aria-hidden />
               <span className="sr-only">Search events</span>
               <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by name, venue, city or organiser" className="w-full bg-transparent text-sm outline-none placeholder:text-subtle/80" />

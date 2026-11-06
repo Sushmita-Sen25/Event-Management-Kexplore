@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="frontend/public/favicon.svg" width="56" alt="EventSphere logo" />
+<img src="frontend/public/favicon.svg" width="56" alt="Eventique logo" />
 
-# EventSphere
+# Eventique
 
 **Discover, book and manage events across India.**
 A full-stack event platform built with React, Tailwind CSS, Express and MongoDB Atlas.
@@ -20,7 +20,7 @@ A full-stack event platform built with React, Tailwind CSS, Express and MongoDB 
 ![Vercel](https://img.shields.io/badge/Web-Vercel-000?logo=vercel)
 ![Render](https://img.shields.io/badge/API-Render-46e3b7?logo=render&logoColor=black)
 
-<img src="docs/screenshots/home-dark.jpg" alt="EventSphere home page" width="100%" />
+<img src="docs/screenshots/home-light.jpg" alt="Eventique home page" width="100%" />
 
 </div>
 
@@ -46,7 +46,7 @@ A full-stack event platform built with React, Tailwind CSS, Express and MongoDB 
 
 ## ✨ Highlights
 
-- **Editorial, professional layout** — serif headlines, hairline grids and a restrained wine-and-lavender palette; dark by default with a light “lavender mist” theme.
+- **Editorial, professional layout** — serif headlines, hairline grids and a twelve-pink palette; a light “blush” theme by default and a dark “after hours” theme.
 - **DriftWall hero** — the [React Bits](https://reactbits.dev) DriftWall component turns every upcoming event into a drifting perspective wall beside the headline. Hover lifts a tile; click opens the event.
 - **Liquid-glass navigation** — the floating navbar, every tab bar, the grid/list toggle and the mobile booking bar sit on React Bits GlassSurface, which refracts whatever scrolls underneath.
 - **Calendar you can steer** — *What’s on, week by week* is a React Bits AnimatedList: hover or use ↑/↓ and Enter to move through the next twelve events.
@@ -60,12 +60,20 @@ A full-stack event platform built with React, Tailwind CSS, Express and MongoDB 
 
 | Swatch | Name | Hex | Role |
 | --- | --- | --- | --- |
-| ![](https://placehold.co/20x20/541533/541533.png) | Wine | `#541533` | Gradients, glows, pass background |
-| ![](https://placehold.co/20x20/722548/722548.png) | Plum | `#722548` | Primary buttons, active states, light-mode accent |
-| ![](https://placehold.co/20x20/221932/221932.png) | Night | `#221932` | Raised surfaces in dark mode, light-mode text |
-| ![](https://placehold.co/20x20/0B0407/0B0407.png) | Ink | `#0B0407` | Dark-mode canvas |
-| ![](https://placehold.co/20x20/77568B/77568B.png) | Dusk | `#77568B` | Secondary accent, gradient end |
-| ![](https://placehold.co/20x20/9682B9/9682B9.png) | Lavender | `#9682B9` | Dark-mode accent, focus rings, countdowns |
+| ![](https://placehold.co/20x20/F4C2C2/F4C2C2.png) | Baby pink | `#F4C2C2` | Palette reference |
+| ![](https://placehold.co/20x20/FFD1DC/FFD1DC.png) | Pastel pink | `#FFD1DC` | Pass background; light theme surfaces are tints of it |
+| ![](https://placehold.co/20x20/FFB7D5/FFB7D5.png) | Cotton candy pink | `#FFB7D5` | Dark-theme accent text, pass stub, active tab pill in dark mode |
+| ![](https://placehold.co/20x20/F2BDCD/F2BDCD.png) | Orchid pink | `#F2BDCD` | Palette reference |
+| ![](https://placehold.co/20x20/FFB7C5/FFB7C5.png) | Cherry blossom pink | `#FFB7C5` | Palette reference |
+| ![](https://placehold.co/20x20/FFA6C9/FFA6C9.png) | Carnation pink | `#FFA6C9` | Palette reference |
+| ![](https://placehold.co/20x20/FEBAAD/FEBAAD.png) | Melon pink | `#FEBAAD` | Palette reference |
+| ![](https://placehold.co/20x20/F88379/F88379.png) | Coral pink | `#F88379` | Palette reference |
+| ![](https://placehold.co/20x20/FA8072/FA8072.png) | Salmon pink | `#FA8072` | Cancel (hold) button fill, errors in dark mode |
+| ![](https://placehold.co/20x20/F58092/F58092.png) | Bubblegum pink | `#F58092` | Palette reference |
+| ![](https://placehold.co/20x20/FF69B4/FF69B4.png) | Hot pink | `#FF69B4` | Primary buttons, focus rings, seat meter, slider handle |
+| ![](https://placehold.co/20x20/FF66CC/FF66CC.png) | Rose pink | `#FF66CC` | Button hover, button rim highlight |
+
+Every swatch is a light pink, so none of them can carry text on a light background (hot pink on blush is about 2.4:1). Pinks are used as fills, with deep berry ink (`#2A1320`) for text on them, and accent text in the light theme is hot pink deepened to `#B8276F` (5.6:1). Every text/background pair in both themes meets WCAG AA.
 
 - **Type:** Instrument Serif for headlines (with italics for emphasis), Inter for interface text, JetBrains Mono for numbers, dates and booking references.
 - **Layout:** a 1,240 px grid, 1 px hairline dividers, 14–16 px radii and generous spacing. Event cards are image, date line, title, description, venue and price, without boxes or per-card buttons.

@@ -1,27 +1,29 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EventSphere · Events across India</title>
+    <title>Eventique · Events across India</title>
     <meta name="description" content="Concerts, conferences, workshops and festivals across India. Browse the calendar, book seats and keep your pass on your phone." />
-    <meta name="theme-color" content="#0b0407" />
+    <meta name="theme-color" content="#fff6f8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
-    <meta property="og:title" content="EventSphere · Events across India" />
+    <meta property="og:title" content="Eventique · Events across India" />
     <meta property="og:description" content="Concerts, conferences, workshops and festivals across India. Browse the calendar and book seats." />
     <meta property="og:type" content="website" />
     <script>
-      // Apply the saved theme before first paint (dark is the default look).
+      // Apply the saved theme before first paint (light is the default look).
       (function () {
         try {
-          document.documentElement.setAttribute('data-theme', localStorage.getItem('es-theme') || 'dark');
+          var theme = localStorage.getItem('es-theme') || 'light';
+          document.documentElement.setAttribute('data-theme', theme);
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', theme === 'dark' ? '#150b10' : '#fff6f8');
         } catch (e) {}
       })();
     </script>
   </head>
   <body>
-    <noscript>EventSphere needs JavaScript to run.</noscript>
+    <noscript>Eventique needs JavaScript to run.</noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

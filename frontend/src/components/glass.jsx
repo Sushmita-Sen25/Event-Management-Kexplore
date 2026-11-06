@@ -90,8 +90,8 @@ export function GlassPill({ layoutId, className }) {
     <motion.span
       layoutId={layoutId}
       className={cn(
-        'absolute inset-0 rounded-[inherit] bg-white/80 shadow-[0_6px_16px_-8px_rgb(84_21_51/0.35)] ring-1 ring-plum/10',
-        'dark:bg-lavender/15 dark:shadow-[0_6px_18px_-8px_rgb(0_0_0/0.8)] dark:ring-lavender/30',
+        'absolute inset-0 rounded-[inherit] bg-white shadow-[0_6px_16px_-8px_rgb(255_105_180/0.45)] ring-1 ring-hot/20',
+        'dark:bg-candy/12 dark:shadow-[0_6px_18px_-8px_rgb(0_0_0/0.8)] dark:ring-candy/30',
         className,
       )}
       transition={{ type: 'spring', stiffness: 420, damping: 34 }}

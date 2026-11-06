@@ -18,7 +18,7 @@ import { checks, formatPhone, MAX_SEATS, normalisePhone, STEP_FIELDS, validate }
 import NotFound from './NotFound';
 
 const STEPS = ['Your details', 'Seats', 'Review'];
-const PROFILE_KEY = 'eventsphere.profile';
+const PROFILE_KEY = 'eventsphere.profile'; // pre-rename key, kept so saved details carry over
 const STEP_OF = { eventId: 0, name: 0, email: 0, phone: 0, city: 0, seats: 1, terms: 2 };
 
 function savedProfile() {
@@ -37,8 +37,8 @@ function Stepper({ step }) {
           <span
             className={cn(
               'grid size-8 shrink-0 place-items-center rounded-full border text-sm font-medium transition',
-              i < step && 'border-transparent bg-cta text-white',
-              i === step && 'border-lavender text-accent',
+              i < step && 'border-transparent bg-cta text-on-cta',
+              i === step && 'border-hot text-accent',
               i > step && 'border-line text-subtle',
             )}
           >
@@ -214,7 +214,7 @@ export default function Checkout() {
 
   return (
     <>
-      <title>{`Book ${event.title} · EventSphere`}</title>
+      <title>{`Book ${event.title} · Eventique`}</title>
       <div className="shell py-10">
         <Link to={`/events/${event.slug}`} className="inline-flex items-center gap-1.5 text-sm text-subtle hover:text-text">
           <ArrowLeft className="size-4" /> Back to event
@@ -306,7 +306,7 @@ export default function Checkout() {
                       {fieldError('seats') && <p role="alert" className="text-sm text-danger">{fieldError('seats')}</p>}
                       <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
                         {Array.from({ length: max }, (_, i) => i + 1).map((n) => (
-                          <button key={n} type="button" onClick={() => update('seats', n)} aria-pressed={values.seats === n} className={cn('rounded-xl border py-3 font-mono text-sm transition', values.seats === n ? 'border-lavender bg-accent-soft text-accent' : 'border-line hover:border-line-strong')}>
+                          <button key={n} type="button" onClick={() => update('seats', n)} aria-pressed={values.seats === n} className={cn('rounded-xl border py-3 font-mono text-sm transition', values.seats === n ? 'border-hot bg-accent-soft text-accent' : 'border-line hover:border-line-strong')}>
                             {n}
                           </button>
                         ))}
@@ -342,7 +342,7 @@ export default function Checkout() {
                             setTouched((t) => ({ ...t, terms: true }));
                             setErrors((er) => ({ ...er, terms: checks.terms(e.target.checked) }));
                           }}
-                          className="mt-0.5 size-4 accent-[#722548]"
+                          className="mt-0.5 size-4 accent-[#ff69b4]"
                         />
                         <span>
                           I agree to the <Link to="/terms" className="text-accent underline">booking terms</Link> and understand my details are shared with the organiser for check-in.

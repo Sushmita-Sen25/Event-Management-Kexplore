@@ -7,42 +7,42 @@ import { dayNumber, formatPrice, formatTime, monthShort, relativeDay, seatsLeft,
 import { CategoryIcon, cn } from '@/lib/misc';
 
 /*
- * React Bits <AnimatedList> skinned with the EventSphere palette.
+ * React Bits <AnimatedList> skinned with the Eventique palette.
  * The list's own theme variables are inline styles, so ours go in through `style`.
  */
 const SKINS = {
   dark: {
-    '--al-frame': 'rgb(34 25 50 / 0.55)',
-    '--al-frame-edge': 'rgb(150 130 185 / 0.16)',
+    '--al-frame': 'rgb(46 27 36 / 0.6)',
+    '--al-frame-edge': 'rgb(255 183 213 / 0.14)',
     '--al-frame-highlight': 'rgb(255 255 255 / 0.05)',
     '--al-frame-shadow': 'none',
-    '--al-tile': 'linear-gradient(180deg, #251b35 0%, #1a1222 100%)',
-    '--al-tile-edge': 'rgb(150 130 185 / 0.12)',
+    '--al-tile': 'linear-gradient(180deg, #2e1b24 0%, #25161d 100%)',
+    '--al-tile-edge': 'rgb(255 183 213 / 0.12)',
     '--al-tile-highlight': 'rgb(255 255 255 / 0.06)',
     '--al-tile-shadow': '0 6px 14px -8px rgb(0 0 0 / 0.8)',
-    '--al-well': 'rgb(150 130 185 / 0.12)',
-    '--al-ink': '#f4ecf6',
-    '--al-muted': '#a798b8',
-    '--al-thumb': 'rgb(150 130 185 / 0.32)',
-    '--al-hover': 'brightness(1.14)',
+    '--al-well': 'rgb(255 183 213 / 0.1)',
+    '--al-ink': '#ffeef3',
+    '--al-muted': '#c99fb0',
+    '--al-thumb': 'rgb(255 183 213 / 0.3)',
+    '--al-hover': 'brightness(1.12)',
     '--al-press': 'brightness(0.9)',
-    '--al-active': 'brightness(1.18)',
+    '--al-active': 'brightness(1.16)',
   },
   light: {
-    '--al-frame': 'rgb(255 255 255 / 0.6)',
-    '--al-frame-edge': 'rgb(34 25 50 / 0.08)',
+    '--al-frame': 'rgb(255 209 220 / 0.45)',
+    '--al-frame-edge': 'rgb(74 20 44 / 0.08)',
     '--al-frame-highlight': '#ffffff',
     '--al-frame-shadow': 'none',
-    '--al-tile': 'linear-gradient(180deg, #ffffff 0%, #faf6fb 100%)',
-    '--al-tile-edge': 'rgb(34 25 50 / 0.08)',
+    '--al-tile': 'linear-gradient(180deg, #ffffff 0%, #fff8fa 100%)',
+    '--al-tile-edge': 'rgb(74 20 44 / 0.08)',
     '--al-tile-highlight': '#ffffff',
-    '--al-tile-shadow': '0 6px 14px -10px rgb(84 21 51 / 0.35)',
-    '--al-well': 'rgb(114 37 72 / 0.07)',
-    '--al-ink': '#221932',
-    '--al-muted': '#66577a',
-    '--al-thumb': 'rgb(34 25 50 / 0.2)',
+    '--al-tile-shadow': '0 6px 14px -10px rgb(255 105 180 / 0.45)',
+    '--al-well': '#ffe1e8',
+    '--al-ink': '#2a1320',
+    '--al-muted': '#7b5566',
+    '--al-thumb': 'rgb(74 20 44 / 0.2)',
     '--al-hover': 'brightness(0.98)',
-    '--al-press': 'brightness(0.94)',
+    '--al-press': 'brightness(0.95)',
     '--al-active': 'none',
   },
 };
@@ -91,7 +91,7 @@ function AgendaItem({ event, booked, selected }) {
         <span
           className={cn(
             'grid size-9 place-items-center rounded-full border border-[var(--al-tile-edge)] transition-colors duration-200',
-            selected && 'border-lavender bg-plum text-white',
+            selected && 'border-hot bg-hot text-on-cta',
           )}
           aria-hidden
         >
@@ -115,7 +115,7 @@ export function AgendaList({ events, maxHeight = 560 }) {
       <AnimatedList
         items={events}
         theme={dark ? 'dark' : 'light'}
-        accentColor={dark ? '#9682B9' : '#722548'}
+        accentColor={dark ? '#FFB7D5' : '#FF69B4'}
         width="100%"
         maxHeight={maxHeight}
         radius={14}

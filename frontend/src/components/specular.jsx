@@ -3,8 +3,8 @@ import SpecularButton from '@/components/SpecularButton';
 import { useTheme } from '@/hooks/theme';
 
 /**
- * React Bits <SpecularButton> in the EventSphere plum: a solid plum pill whose
- * lavender rim catches a highlight that follows the pointer.
+ * React Bits <SpecularButton> in Eventique hot pink: a solid pink pill with
+ * dark ink text whose rim catches a highlight that follows the pointer.
  */
 export function ShineButton({ size = 'md', children, ...props }) {
   const { dark } = useTheme();
@@ -12,14 +12,14 @@ export function ShineButton({ size = 'md', children, ...props }) {
     <SpecularButton
       size={size}
       radius={14}
-      tint="#722548"
+      tint="#FF69B4"
       tintOpacity={1}
-      textColor="#ffffff"
-      lineColor={dark ? '#efe6fb' : '#ffffff'}
-      baseColor={dark ? '#9682B9' : '#b58aa7'}
+      textColor={dark ? '#1a0b12' : '#2a1320'}
+      lineColor="#ffffff"
+      baseColor={dark ? '#FFB7D5' : '#FF66CC'}
       intensity={1}
-      idleIntensity={dark ? 0.45 : 0.6}
-      glow={dark ? 1.1 : 0.8}
+      idleIntensity={dark ? 0.5 : 0.55}
+      glow={dark ? 1 : 0.7}
       proximity={220}
       {...props}
     >
