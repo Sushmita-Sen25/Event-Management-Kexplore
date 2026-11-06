@@ -27,7 +27,7 @@ async function request(path, { method = 'GET', body, signal } = {}) {
   }
   const data = await response.json().catch(() => ({}));
   if (!response.ok) {
-    const fallback = response.status >= 500 ? 'The server is waking up — try again in a few seconds.' : 'Something went wrong';
+    const fallback = response.status >= 500 ? 'The server is starting up. Please try again in a few seconds.' : 'Something went wrong';
     throw new ApiError(response.status, data.message || fallback, data.fields);
   }
   return data;

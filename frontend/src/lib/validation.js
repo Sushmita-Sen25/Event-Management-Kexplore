@@ -29,7 +29,7 @@ export const checks = {
     if (!value) return 'Enter your full name';
     if (value.length < 3) return 'Name must be at least 3 characters';
     if (value.length > 60) return 'Name must be 60 characters or fewer';
-    if (!NAME.test(value)) return 'Use letters only — spaces, dots, apostrophes and hyphens are fine';
+    if (!NAME.test(value)) return 'Use letters only. Spaces, dots, apostrophes and hyphens are fine';
     return '';
   },
   email(v = '') {

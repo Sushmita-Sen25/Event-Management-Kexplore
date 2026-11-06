@@ -1,4 +1,4 @@
-import { ChevronDown, LoaderCircle, X } from 'lucide-react';
+import { ArrowRight, ChevronDown, LoaderCircle, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { forwardRef, useEffect, useId, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -9,17 +9,17 @@ import { cn } from '@/lib/misc';
 
 /* ---------------------------------------------------------------- Button */
 const VARIANTS = {
-  primary: 'bg-cta text-white shadow-[0_8px_24px_-10px_var(--glow)] hover:bg-cta-hover',
+  primary: 'bg-cta text-white hover:bg-cta-hover',
   inverse: 'bg-text text-canvas hover:opacity-90',
-  outline: 'border border-line-strong text-text hover:bg-accent-soft',
+  outline: 'border border-line-strong text-text hover:border-text/30 hover:bg-accent-soft',
   ghost: 'text-subtle hover:bg-accent-soft hover:text-text',
   danger: 'border border-danger/30 text-danger hover:bg-danger/10',
 };
 const SIZES = {
   sm: 'h-9 gap-1.5 rounded-lg px-3.5 text-sm',
-  md: 'h-11 gap-2 rounded-xl px-5 text-sm',
+  md: 'h-11 gap-2 rounded-[10px] px-5 text-sm',
   lg: 'h-12 gap-2 rounded-xl px-6 text-[0.95rem]',
-  icon: 'size-10 rounded-xl',
+  icon: 'size-10 rounded-[10px]',
 };
 
 export const buttonStyles = (variant = 'primary', size = 'md', className) =>
@@ -44,6 +44,16 @@ export function ButtonLink({ variant, size, className, ...props }) {
   return <Link className={buttonStyles(variant, size, className)} {...props} />;
 }
 
+/** Quiet text link with a trailing arrow, used for "see all" style actions. */
+export function TextLink({ to, children, className }) {
+  return (
+    <Link to={to} className={cn('group inline-flex items-center gap-1.5 text-sm font-medium text-text underline-offset-4 hover:underline', className)}>
+      {children}
+      <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
+    </Link>
+  );
+}
+
 /* ---------------------------------------------------------------- Badge */
 const TONES = {
   neutral: 'border-line bg-sunken text-subtle',
@@ -62,35 +72,27 @@ export function Badge({ tone = 'neutral', className, children }) {
 }
 
 /* ---------------------------------------------------------------- Layout helpers */
+/** Wordmark: a small solid mark and the name set in the display serif. */
 export function Logo({ className }) {
   return (
-    <Link to="/" className={cn('group inline-flex items-center gap-2.5', className)} aria-label="EventSphere home">
-      <svg viewBox="0 0 32 32" className="size-8 transition-transform duration-500 group-hover:rotate-90" aria-hidden>
-        <defs>
-          <linearGradient id="es-logo" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#541533" />
-            <stop offset=".5" stopColor="#722548" />
-            <stop offset="1" stopColor="#77568b" />
-          </linearGradient>
-        </defs>
-        <rect width="32" height="32" rx="9" fill="url(#es-logo)" />
-        <circle cx="16" cy="16" r="7.5" fill="none" stroke="#f3ebf7" strokeWidth="2.6" />
-        <circle cx="16" cy="16" r="2.8" fill="#9682b9" />
+    <Link to="/" className={cn('inline-flex items-center gap-2', className)} aria-label="EventSphere home">
+      <svg viewBox="0 0 20 20" className="size-[18px] text-plum dark:text-lavender" aria-hidden>
+        <circle cx="10" cy="10" r="8.25" fill="none" stroke="currentColor" strokeWidth="2.5" />
+        <circle cx="10" cy="10" r="3" fill="currentColor" />
       </svg>
-      <span className="text-[1.05rem] font-semibold tracking-tight">
-        Event<span className="text-accent">Sphere</span>
-      </span>
+      <span className="display text-[1.6rem] leading-none tracking-[-0.01em]">EventSphere</span>
     </Link>
   );
 }
 
-export function SectionHeading({ eyebrow, title, description, action, center = false, className }) {
+export function SectionHeading({ title, description, action, className, id }) {
   return (
-    <div className={cn('flex flex-col gap-5 md:flex-row md:items-end md:justify-between', center && 'items-center text-center md:flex-col md:items-center', className)}>
-      <div className={cn('max-w-2xl', center && 'mx-auto')}>
-        {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
-        <h2 className="display text-4xl sm:text-5xl">{title}</h2>
-        {description && <p className="mt-3 text-subtle">{description}</p>}
+    <div className={cn('flex flex-col gap-4 border-b border-line pb-5 md:flex-row md:items-end md:justify-between', className)}>
+      <div className="max-w-2xl">
+        <h2 id={id} className="display text-[2.15rem] sm:text-[2.6rem]">
+          {title}
+        </h2>
+        {description && <p className="mt-2 text-subtle">{description}</p>}
       </div>
       {action}
     </div>
@@ -101,10 +103,10 @@ export function Reveal({ children, delay = 0, className }) {
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 18 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
@@ -115,13 +117,9 @@ export const Skeleton = ({ className }) => <div className={cn('skeleton', classN
 
 export function EmptyState({ icon: Icon, title, children, action }) {
   return (
-    <div className="surface flex flex-col items-center px-6 py-14 text-center">
-      {Icon && (
-        <span className="mb-4 grid size-12 place-items-center rounded-xl bg-accent-soft text-accent">
-          <Icon className="size-5" />
-        </span>
-      )}
-      <h3 className="display text-3xl">{title}</h3>
+    <div className="flex flex-col items-center rounded-2xl border border-dashed border-line-strong px-6 py-14 text-center">
+      {Icon && <Icon className="mb-4 size-6 text-subtle" strokeWidth={1.5} aria-hidden />}
+      <h3 className="display text-[2rem]">{title}</h3>
       {children && <p className="mt-2 max-w-md text-subtle">{children}</p>}
       {action && <div className="mt-6">{action}</div>}
     </div>
@@ -264,29 +262,34 @@ export function Sheet({ open, onClose, title, side = 'right', children }) {
 }
 
 /* ---------------------------------------------------------------- Event bits */
+/**
+ * Live countdown. `compact` is an inline "8d 11h 05m"; the default is a single
+ * row of figures with small unit labels, ticking every second.
+ */
 export function Countdown({ target, compact = false, className }) {
   const { done, days, hours, minutes, seconds } = useCountdown(target);
   if (done) return null;
-  const units = [
-    ['Days', days],
-    ['Hrs', hours],
-    ['Min', minutes],
-    ['Sec', seconds],
-  ];
+  const pad = (n) => String(n).padStart(2, '0');
   if (compact) {
     return (
-      <span className={cn('font-mono tabular-nums', className)}>
-        {days}d {String(hours).padStart(2, '0')}h {String(minutes).padStart(2, '0')}m
+      <span className={cn('tabular-nums', className)}>
+        {days}d {pad(hours)}h {pad(minutes)}m
       </span>
     );
   }
+  const units = [
+    [days, days === 1 ? 'day' : 'days'],
+    [pad(hours), 'hrs'],
+    [pad(minutes), 'min'],
+    [pad(seconds), 'sec'],
+  ];
   return (
-    <div role="timer" aria-label={`${days} days ${hours} hours ${minutes} minutes to go`} className={cn('grid grid-cols-4 gap-2', className)}>
-      {units.map(([label, value]) => (
-        <div key={label} className="rounded-xl border border-line bg-sunken/60 py-2.5 text-center">
-          <span className="block font-mono text-xl font-semibold tabular-nums text-text">{String(value).padStart(2, '0')}</span>
-          <span className="text-[10px] uppercase tracking-[0.14em] text-subtle">{label}</span>
-        </div>
+    <div role="timer" aria-label={`${days} days ${hours} hours ${minutes} minutes to go`} className={cn('flex items-baseline gap-x-4 tabular-nums', className)}>
+      {units.map(([value, label]) => (
+        <span key={label} className="whitespace-nowrap">
+          <span className="text-2xl font-medium tracking-tight text-text">{value}</span>
+          <span className="ml-1 text-xs text-subtle">{label}</span>
+        </span>
       ))}
     </div>
   );
@@ -296,13 +299,13 @@ export function SeatMeter({ event, className }) {
   const { label, tone, share } = demandLabel(event);
   return (
     <div className={className}>
-      <div className="mb-1.5 flex justify-between text-xs">
+      <div className="mb-2 flex justify-between text-sm">
         <span className={cn(tone === 'danger' ? 'text-danger' : tone === 'warning' ? 'text-warning' : 'text-subtle')}>{label}</span>
-        <span className="font-mono text-subtle">{Math.round(share * 100)}%</span>
+        <span className="text-subtle tabular-nums">{Math.round(share * 100)}% booked</span>
       </div>
-      <div className="h-1.5 overflow-hidden rounded-full bg-sunken">
+      <div className="h-1 overflow-hidden rounded-full bg-line">
         <motion.div
-          className={cn('h-full rounded-full', tone === 'danger' ? 'bg-danger' : 'bg-gradient-to-r from-plum to-lavender')}
+          className={cn('h-full rounded-full', tone === 'danger' ? 'bg-danger' : 'bg-plum dark:bg-lavender')}
           initial={{ width: 0 }}
           whileInView={{ width: `${Math.max(3, share * 100)}%` }}
           viewport={{ once: true }}

@@ -57,7 +57,7 @@ function OrderSummary({ event, seats }) {
     <div className="surface overflow-hidden">
       <img src={imageSized(event.image, 760)} alt="" className="aspect-[16/9] w-full object-cover" />
       <div className="p-6">
-        <p className="eyebrow">Order summary</p>
+        <p className="eyebrow">Summary</p>
         <h2 className="mt-2 text-lg font-semibold leading-snug">{event.title}</h2>
         <ul className="mt-4 space-y-2 text-sm text-subtle">
           <li className="flex gap-2"><CalendarDays className="mt-0.5 size-4 shrink-0" />{formatFullDate(event.startsAt)}, {formatTime(event.startsAt)}</li>
@@ -219,7 +219,7 @@ export default function Checkout() {
         <Link to={`/events/${event.slug}`} className="inline-flex items-center gap-1.5 text-sm text-subtle hover:text-text">
           <ArrowLeft className="size-4" /> Back to event
         </Link>
-        <h1 className="display mt-4 text-5xl">Book your seats</h1>
+        <h1 className="display mt-6 text-5xl">Book your seats</h1>
 
         <div className="mt-10 grid items-start gap-10 lg:grid-cols-[1fr_380px]">
           <form
@@ -238,8 +238,8 @@ export default function Checkout() {
                   {step === 0 && (
                     <>
                       {!user && (
-                        <div className="flex flex-col gap-3 rounded-xl border border-dashed border-line p-4 sm:flex-row sm:items-center sm:justify-between">
-                          <p className="text-sm text-subtle">Sign in with Google to fill this in and keep your bookings on every device.</p>
+                        <div className="flex flex-col gap-3 rounded-xl bg-sunken/60 p-4 sm:flex-row sm:items-center sm:justify-between">
+                          <p className="text-sm text-subtle">Sign in with Google to fill in your details and see your bookings on any device.</p>
                           <div className="[color-scheme:light]">
                             <GoogleLogin onSuccess={(r) => signIn(r.credential)} theme={dark ? 'filled_black' : 'outline'} shape="pill" size="medium" text="continue_with" />
                           </div>
@@ -258,7 +258,7 @@ export default function Checkout() {
                         >
                           {options.map((o) => (
                             <option key={o.id} value={o.id}>
-                              {o.title} — {formatFullDate(o.startsAt)}
+                              {o.title} · {formatFullDate(o.startsAt)}
                             </option>
                           ))}
                         </SelectInput>
@@ -267,7 +267,7 @@ export default function Checkout() {
                         <TextInput id="name" name="name" autoComplete="name" placeholder="As it should appear on your pass" value={values.name} onChange={(e) => update('name', e.target.value)} onBlur={() => blur('name')} invalid={Boolean(fieldError('name'))} aria-describedby="name-error" />
                       </Field>
                       <div className="grid gap-5 sm:grid-cols-2">
-                        <Field label="Email" id="email" error={fieldError('email')} hint="We’ll show your pass instantly — no inbox needed.">
+                        <Field label="Email" id="email" error={fieldError('email')} hint="Your pass appears on screen straight away.">
                           <TextInput id="email" name="email" type="email" inputMode="email" autoComplete="email" placeholder="you@example.com" value={values.email} onChange={(e) => update('email', e.target.value)} onBlur={() => blur('email')} invalid={Boolean(fieldError('email'))} aria-describedby="email-error email-hint" />
                         </Field>
                         <Field label="Mobile number" id="phone" error={fieldError('phone')} hint="10-digit Indian mobile number">

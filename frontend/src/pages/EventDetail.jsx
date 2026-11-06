@@ -1,14 +1,14 @@
-import { ArrowRight, Building2, CalendarDays, CalendarPlus, Check, Clock, MapPin, Minus, Navigation, Plus, Share2, Ticket } from 'lucide-react';
+import { Building2, CalendarDays, CalendarPlus, Check, Clock, MapPin, Minus, Navigation, Plus, Share2, Ticket } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { toast } from 'sonner';
 import { EventCard } from '@/components/events';
 import { Glass, GlassTabs } from '@/components/glass';
-import { Accordion, Badge, Button, ButtonLink, Countdown, EmptyState, SeatMeter, Skeleton } from '@/components/ui';
+import { Accordion, Button, ButtonLink, Countdown, EmptyState, SeatMeter, SectionHeading, Skeleton } from '@/components/ui';
 import { useEvent, useLocalBookings } from '@/hooks/data';
 import { formatFullDate, formatPrice, formatTimeRange, imageSized, phaseOf, seatsLeft } from '@/lib/format';
-import { addToCalendar, CategoryIcon, cn, FAQS } from '@/lib/misc';
+import { addToCalendar, cn, FAQS } from '@/lib/misc';
 import { MAX_SEATS } from '@/lib/validation';
 import NotFound from './NotFound';
 
@@ -31,68 +31,65 @@ function BookingCard({ event, booking }) {
   const [seats, setSeats] = useState(1);
 
   return (
-    <div className="surface p-6 shadow-[0_30px_60px_-40px_var(--glow)]">
-      <div className="flex items-end justify-between">
-        <div>
-          <p className="text-xs uppercase tracking-wider text-subtle">Price</p>
-          <p className="display text-4xl">{formatPrice(event.price)}</p>
-        </div>
-        {event.price > 0 && <p className="pb-1 text-sm text-subtle">per seat</p>}
+    <div className="rounded-2xl border border-line bg-raised p-6">
+      <div className="flex items-baseline justify-between gap-4">
+        <p className="display text-[2.6rem] leading-none">{formatPrice(event.price)}</p>
+        {event.price > 0 && <p className="text-sm text-subtle">per seat</p>}
       </div>
 
       {phase === 'upcoming' && (
-        <div className="mt-6">
-          <p className="mb-2 text-xs uppercase tracking-wider text-subtle">Starts in</p>
-          <Countdown target={event.startsAt} />
+        <div className="mt-6 border-t border-line pt-5">
+          <p className="text-sm text-subtle">Starts in</p>
+          <Countdown target={event.startsAt} className="mt-1.5" />
         </div>
       )}
-      {phase !== 'ended' && <SeatMeter event={event} className="mt-6" />}
+      {phase !== 'ended' && <SeatMeter event={event} className="mt-5" />}
 
       {booking ? (
-        <div className="mt-6 rounded-xl border border-success/30 bg-success/10 p-4 text-sm">
-          <p className="flex items-center gap-2 font-medium text-success">
-            <Check className="size-4" /> You’re booked — {booking.seats} seat{booking.seats > 1 ? 's' : ''}
+        <div className="mt-6 border-t border-line pt-5">
+          <p className="flex items-center gap-2 text-sm font-medium text-success">
+            <Check className="size-4" /> You’re booked for {booking.seats} seat{booking.seats > 1 ? 's' : ''}
           </p>
-          <ButtonLink to={`/bookings/${booking.reference}`} variant="inverse" size="md" className="mt-3 w-full">
+          <ButtonLink to={`/bookings/${booking.reference}`} variant="inverse" size="md" className="mt-4 w-full">
             <Ticket className="size-4" /> View your pass
           </ButtonLink>
         </div>
       ) : phase === 'ended' ? (
-        <p className="mt-6 rounded-xl bg-sunken p-4 text-center text-sm text-subtle">This event has ended.</p>
+        <p className="mt-6 border-t border-line pt-5 text-sm text-subtle">This event has ended.</p>
       ) : left === 0 ? (
-        <p className="mt-6 rounded-xl bg-danger/10 p-4 text-center text-sm text-danger">Sold out — every seat is taken.</p>
+        <p className="mt-6 border-t border-line pt-5 text-sm text-danger">Sold out. Every seat has been booked.</p>
       ) : (
-        <>
-          <div className="mt-6 flex items-center justify-between rounded-xl border border-line p-2 pl-4">
+        <div className="mt-6 border-t border-line pt-5">
+          <div className="flex items-center justify-between">
             <span className="text-sm">Seats</span>
-            <div className="flex items-center gap-1">
-              <Button variant="ghost" size="icon" onClick={() => setSeats((n) => Math.max(1, n - 1))} disabled={seats <= 1} aria-label="One fewer seat">
+            <div className="flex items-center gap-1 rounded-[10px] border border-line">
+              <Button variant="ghost" size="icon" className="size-9" onClick={() => setSeats((n) => Math.max(1, n - 1))} disabled={seats <= 1} aria-label="One fewer seat">
                 <Minus className="size-4" />
               </Button>
-              <span className="w-8 text-center font-mono font-semibold tabular-nums" aria-live="polite">
+              <span className="w-6 text-center font-medium tabular-nums" aria-live="polite">
                 {seats}
               </span>
-              <Button variant="ghost" size="icon" onClick={() => setSeats((n) => Math.min(max, n + 1))} disabled={seats >= max} aria-label="One more seat">
+              <Button variant="ghost" size="icon" className="size-9" onClick={() => setSeats((n) => Math.min(max, n + 1))} disabled={seats >= max} aria-label="One more seat">
                 <Plus className="size-4" />
               </Button>
             </div>
           </div>
           <div className="mt-4 flex justify-between text-sm">
             <span className="text-subtle">Total</span>
-            <span className="font-semibold">{formatPrice(event.price * seats)}</span>
+            <span className="font-medium tabular-nums">{formatPrice(event.price * seats)}</span>
           </div>
-          <Button size="lg" className="mt-4 w-full" onClick={() => navigate(`/checkout/${event.slug}?seats=${seats}`)}>
-            Continue to booking <ArrowRight className="size-4" />
+          <Button size="lg" className="mt-5 w-full" onClick={() => navigate(`/checkout/${event.slug}?seats=${seats}`)}>
+            Continue to booking
           </Button>
-          <p className="mt-3 text-center text-xs text-subtle">No payment now · free cancellation</p>
-        </>
+          <p className="mt-3 text-center text-xs text-subtle">Nothing to pay now. Cancel any time.</p>
+        </div>
       )}
 
-      <div className="mt-6 grid grid-cols-2 gap-2 border-t border-line pt-5">
-        <Button variant="outline" size="sm" onClick={() => addToCalendar(event, booking?.reference)}>
-          <CalendarPlus className="size-4" /> Calendar
+      <div className="mt-5 flex justify-center gap-1 border-t border-line pt-4">
+        <Button variant="ghost" size="sm" onClick={() => addToCalendar(event, booking?.reference)}>
+          <CalendarPlus className="size-4" /> Add to calendar
         </Button>
-        <Button variant="outline" size="sm" onClick={() => share(event)}>
+        <Button variant="ghost" size="sm" onClick={() => share(event)}>
           <Share2 className="size-4" /> Share
         </Button>
       </div>
@@ -106,28 +103,30 @@ function TabPanel({ tab, event }) {
   if (tab === 'Overview') {
     return (
       <div className="space-y-8">
-        <p className="text-lg leading-relaxed text-text/85">{event.description}</p>
+        <p className="max-w-2xl text-lg leading-relaxed text-text/90">{event.description}</p>
         <div>
-          <h3 className="mb-4 font-semibold">Highlights</h3>
-          <ul className="grid gap-3 sm:grid-cols-2">
+          <h3 className="font-semibold">Highlights</h3>
+          <ul className="mt-3 grid max-w-2xl gap-x-8 sm:grid-cols-2">
             {event.highlights.map((h) => (
-              <li key={h} className="flex items-start gap-3 rounded-xl border border-line p-4 text-sm">
-                <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-accent-soft text-accent">
-                  <Check className="size-3" />
-                </span>
+              <li key={h} className="flex gap-3 border-b border-line py-3 text-[15px]">
+                <span aria-hidden className="mt-[0.7em] h-px w-3 shrink-0 bg-accent" />
                 {h}
               </li>
             ))}
           </ul>
         </div>
         {event.tags?.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {event.tags.map((t) => (
-              <Link key={t} to={`/events?q=${encodeURIComponent(t)}`} className="rounded-lg border border-line px-2.5 py-1 text-xs text-subtle hover:border-line-strong hover:text-text">
-                #{t}
-              </Link>
+          <p className="text-sm text-subtle">
+            Tagged{' '}
+            {event.tags.map((t, i) => (
+              <span key={t}>
+                {i > 0 && ', '}
+                <Link to={`/events?q=${encodeURIComponent(t)}`} className="text-text underline decoration-line-strong underline-offset-4 hover:decoration-current">
+                  {t}
+                </Link>
+              </span>
             ))}
-          </div>
+          </p>
         )}
       </div>
     );
@@ -137,8 +136,8 @@ function TabPanel({ tab, event }) {
       <ol className="relative space-y-6 border-l border-line pl-8">
         {event.schedule.map((item) => (
           <li key={item.title} className="relative">
-            <span className="absolute -left-[37px] top-1.5 size-2.5 rounded-full bg-lavender ring-4 ring-canvas" />
-            <p className="font-mono text-sm text-accent">{item.time}</p>
+            <span className="absolute -left-[36px] top-2 size-2 rounded-full bg-accent ring-4 ring-canvas" />
+            <p className="text-sm tabular-nums text-subtle">{item.time}</p>
             <p className="mt-0.5 font-medium">{item.title}</p>
           </li>
         ))}
@@ -162,7 +161,7 @@ function TabPanel({ tab, event }) {
             <Navigation className="size-4" /> Get directions
           </a>
         </div>
-        <iframe title={`Map of ${event.venue.name}`} src={map} loading="lazy" className="mt-5 h-80 w-full rounded-2xl border border-line dark:[filter:invert(0.9)_hue-rotate(200deg)_saturate(0.6)]" />
+        <iframe title={`Map of ${event.venue.name}`} src={map} loading="lazy" className="mt-5 h-80 w-full rounded-2xl border border-line dark:[filter:invert(0.9)_hue-rotate(200deg)_saturate(0.5)]" />
       </div>
     );
   }
@@ -199,19 +198,16 @@ export default function EventDetail() {
       <title>{`${event.title} · EventSphere`}</title>
       <meta name="description" content={event.summary} />
       <article>
-        <header className="shell pt-10">
+        <header className="shell pt-12">
           <nav aria-label="Breadcrumb" className="text-sm text-subtle">
             <Link to="/" className="hover:text-text">Home</Link> /{' '}
             <Link to="/events" className="hover:text-text">Events</Link> /{' '}
             <Link to={`/events?category=${event.category}`} className="hover:text-text">{event.category}</Link>
           </nav>
-          <div className="mt-6 flex flex-wrap items-center gap-2">
-            <Badge tone="accent"><CategoryIcon name={event.category} className="size-3.5" /> {event.category}</Badge>
-            {event.featured && <Badge tone="solid">Featured</Badge>}
-            {phase === 'live' && <Badge tone="danger">Happening now</Badge>}
-            {phase === 'ended' && <Badge>Ended</Badge>}
-          </div>
-          <h1 className="display mt-4 max-w-4xl text-5xl sm:text-6xl lg:text-7xl">{event.title}</h1>
+          <h1 className="display mt-8 max-w-4xl text-5xl sm:text-6xl lg:text-7xl">{event.title}</h1>
+          {phase !== 'upcoming' && (
+            <p className={cn('mt-4 text-sm font-medium', phase === 'live' ? 'text-danger' : 'text-subtle')}>{phase === 'live' ? 'Happening now' : 'This event has ended'}</p>
+          )}
           <dl className="mt-6 flex flex-wrap gap-x-8 gap-y-3 text-sm text-subtle">
             <div className="flex items-center gap-2"><CalendarDays className="size-4" /><dt className="sr-only">Date</dt><dd>{formatFullDate(event.startsAt)}</dd></div>
             <div className="flex items-center gap-2"><Clock className="size-4" /><dt className="sr-only">Time</dt><dd>{formatTimeRange(event.startsAt, event.endsAt)}</dd></div>
@@ -221,9 +217,8 @@ export default function EventDetail() {
         </header>
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="shell mt-10">
-          <div className="relative aspect-[16/9] overflow-hidden rounded-[28px] border border-line sm:aspect-[21/9]">
+          <div className="aspect-[16/9] overflow-hidden rounded-[20px] bg-sunken sm:aspect-[21/9]">
             <img src={imageSized(event.image, 1800)} alt={event.title} className={cn('size-full object-cover', phase === 'ended' && 'grayscale')} />
-            <div className="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent" />
           </div>
         </motion.div>
 
@@ -249,9 +244,9 @@ export default function EventDetail() {
       </article>
 
       {similar.length > 0 && (
-        <section className="shell mt-24" aria-labelledby="similar-heading">
-          <h2 id="similar-heading" className="display text-4xl">You might also like</h2>
-          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <section className="shell mt-28" aria-labelledby="similar-heading">
+          <SectionHeading id="similar-heading" title={`More ${event.category.toLowerCase()} events`} />
+          <div className="mt-8 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
             {similar.map((e, i) => <EventCard key={e.id} event={e} index={i} />)}
           </div>
         </section>

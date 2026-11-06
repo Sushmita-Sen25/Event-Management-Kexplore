@@ -1,12 +1,12 @@
 import { GoogleLogin, useGoogleOneTapLogin } from '@react-oauth/google';
 import { useMutation } from '@tanstack/react-query';
 import { ReactLenis, useLenis } from 'lenis/react';
-import { ArrowRight, LogOut, Menu, Moon, Sun, Ticket } from 'lucide-react';
+import { LogOut, Menu, Moon, Sun, Ticket } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router';
 import { toast } from 'sonner';
-import { useFacets, useLocalBookings } from '@/hooks/data';
+import { useLocalBookings } from '@/hooks/data';
 import { useSession } from '@/hooks/session';
 import { useTheme } from '@/hooks/theme';
 import { api } from '@/lib/api';
@@ -21,23 +21,6 @@ const NAV = [
   { to: '/events', label: 'Events' },
   { to: '/bookings', label: 'My bookings' },
 ];
-
-function AnnouncementBar() {
-  const { data } = useFacets();
-  return (
-    <div className="bg-gradient-to-r from-wine via-plum to-dusk text-white">
-      <div className="shell flex h-9 items-center justify-center gap-2 text-xs sm:text-[13px]">
-        <span className="size-1.5 animate-pulse-dot rounded-full bg-white" aria-hidden />
-        <span className="truncate">
-          New season: {data ? `${data.totals.events} events across ${data.totals.cities} cities` : 'events across India'}
-        </span>
-        <Link to="/events" className="hidden items-center gap-1 font-medium underline-offset-4 hover:underline sm:inline-flex">
-          See the calendar <ArrowRight className="size-3" />
-        </Link>
-      </div>
-    </div>
-  );
-}
 
 function ThemeToggle() {
   const { dark, toggle } = useTheme();
@@ -194,7 +177,7 @@ function Newsletter() {
   const subscribe = useMutation({
     mutationFn: () => api.subscribe(email.trim(), interests),
     onSuccess: ({ alreadySubscribed }) => {
-      toast.success(alreadySubscribed ? 'You’re already on the list — interests updated.' : 'Subscribed! The weekly lineup lands every Friday.');
+      toast.success(alreadySubscribed ? 'You’re already subscribed. Your interests have been updated.' : 'Subscribed. Your first email arrives on Friday.');
       setEmail('');
     },
     onError: (err) => setError(err.fields?.email ?? err.message),
@@ -232,7 +215,8 @@ function Newsletter() {
           {error}
         </p>
       )}
-      <div className="mt-4 flex flex-wrap gap-2" role="group" aria-label="Interests">
+      <p className="mt-5 text-xs text-subtle">Interests (optional)</p>
+      <div className="mt-2 flex flex-wrap gap-1.5 text-[13px]" role="group" aria-label="Interests (optional)">
         {CATEGORIES.map(({ name }) => {
           const on = interests.includes(name);
           return (
@@ -241,7 +225,7 @@ function Newsletter() {
               type="button"
               aria-pressed={on}
               onClick={() => setInterests((list) => (on ? list.filter((n) => n !== name) : [...list, name]))}
-              className={cn('rounded-lg border px-2.5 py-1 text-xs transition', on ? 'border-lavender bg-accent-soft text-accent' : 'border-line text-subtle hover:border-line-strong')}
+              className={cn('rounded-full border px-3 py-1 transition-colors', on ? 'border-text bg-text text-canvas' : 'border-line text-subtle hover:border-line-strong hover:text-text')}
             >
               {name}
             </button>
@@ -252,57 +236,51 @@ function Newsletter() {
   );
 }
 
+const FOOTER_LINKS = [
+  ['Explore', [['All events', '/events'], ['This week', '/events?when=week'], ['Free events', '/events?price=free'], ['Past events', '/events?when=past']]],
+  ['Bookings', [['My bookings', '/bookings'], ['Calendar view', '/events?view=list']]],
+  ['About', [['Privacy policy', '/privacy'], ['Terms of service', '/terms'], ['Source code', 'https://github.com/Sushmita-Sen25/Event_mangement_website']]],
+];
+
 function Footer() {
   return (
-    <footer className="mt-24 border-t border-line bg-panel">
-      <div className="shell grid gap-12 py-16 lg:grid-cols-[1.1fr_1fr]">
-        <div>
-          <p className="eyebrow">The weekly lineup</p>
-          <h2 className="display mt-3 text-4xl">Never miss a night worth remembering.</h2>
-          <p className="mt-3 max-w-md text-subtle">One email every Friday with the best events near you. Pick what you’re into.</p>
-          <div className="mt-6">
+    <footer className="mt-32 border-t border-line">
+      <div className="shell grid gap-14 py-16 lg:grid-cols-[1.15fr_1fr]">
+        <div className="max-w-md">
+          <Logo />
+          <h2 className="mt-8 font-semibold">The weekly lineup</h2>
+          <p className="mt-1.5 text-sm text-subtle">New events in your city, every Friday. Unsubscribe from any email.</p>
+          <div className="mt-5">
             <Newsletter />
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
-          <div>
-            <h3 className="mb-4 text-sm font-semibold">Explore</h3>
-            <ul className="space-y-2.5 text-sm text-subtle">
-              {CATEGORIES.slice(0, 5).map((c) => (
-                <li key={c.name}>
-                  <Link to={`/events?category=${c.name}`} className="hover:text-text">
-                    {c.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h3 className="mb-4 text-sm font-semibold">Your account</h3>
-            <ul className="space-y-2.5 text-sm text-subtle">
-              <li><Link to="/bookings" className="hover:text-text">My bookings</Link></li>
-              <li><Link to="/events?when=week" className="hover:text-text">This week</Link></li>
-              <li><Link to="/events?price=free" className="hover:text-text">Free events</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="mb-4 text-sm font-semibold">Company</h3>
-            <ul className="space-y-2.5 text-sm text-subtle">
-              <li><Link to="/privacy" className="hover:text-text">Privacy policy</Link></li>
-              <li><Link to="/terms" className="hover:text-text">Terms of service</Link></li>
-              <li>
-                <a href="https://github.com/Sushmita-Sen25/Event_mangement_website" target="_blank" rel="noreferrer" className="hover:text-text">
-                  Source code
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <nav aria-label="Footer" className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+          {FOOTER_LINKS.map(([heading, links]) => (
+            <div key={heading}>
+              <h3 className="text-sm font-medium">{heading}</h3>
+              <ul className="mt-4 space-y-2.5 text-sm text-subtle">
+                {links.map(([label, to]) => (
+                  <li key={label}>
+                    {to.startsWith('http') ? (
+                      <a href={to} target="_blank" rel="noreferrer" className="hover:text-text">
+                        {label}
+                      </a>
+                    ) : (
+                      <Link to={to} className="hover:text-text">
+                        {label}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </nav>
       </div>
       <div className="border-t border-line">
-        <div className="shell flex flex-col items-center justify-between gap-3 py-6 text-xs text-subtle sm:flex-row">
-          <Logo />
-          <p>© {new Date().getFullYear()} EventSphere · K Explore Web Designing · All times in IST</p>
+        <div className="shell flex flex-col gap-2 py-6 text-xs text-subtle sm:flex-row sm:justify-between">
+          <p>© {new Date().getFullYear()} EventSphere. A K Explore web design project.</p>
+          <p>All times are Indian Standard Time.</p>
         </div>
       </div>
     </footer>
@@ -352,7 +330,6 @@ export function RootLayout() {
       <a href="#content" className="sr-only z-[100] rounded-lg bg-cta px-4 py-2 text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4">
         Skip to content
       </a>
-      <AnnouncementBar />
       <Header />
       <main id="content" className="min-h-[70vh]">
         <Suspense fallback={<PageFallback />}>

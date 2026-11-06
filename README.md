@@ -47,7 +47,7 @@ A full-stack event platform built with React, Tailwind CSS, Express and MongoDB 
 ## ✨ Highlights
 
 - **Editorial, professional layout** — serif headlines, hairline grids and a restrained wine-and-lavender palette; dark by default with a light “lavender mist” theme.
-- **DriftWall showcase** — the [React Bits](https://reactbits.dev) DriftWall component turns every upcoming event into a drifting perspective wall. Hover lifts a tile; click opens the event.
+- **DriftWall hero** — the [React Bits](https://reactbits.dev) DriftWall component turns every upcoming event into a drifting perspective wall beside the headline. Hover lifts a tile; click opens the event.
 - **Liquid-glass navigation** — the floating navbar, every tab bar, the grid/list toggle and the mobile booking bar sit on React Bits GlassSurface, which refracts whatever scrolls underneath.
 - **Calendar you can steer** — *What’s on, week by week* is a React Bits AnimatedList: hover or use ↑/↓ and Enter to move through the next twelve events.
 - **Deliberate commitments** — bookings are confirmed with a slide-to-book control (SlideCommit) and cancelled with a press-and-hold button (HoldButton), so neither can happen by accident.
@@ -68,7 +68,8 @@ A full-stack event platform built with React, Tailwind CSS, Express and MongoDB 
 | ![](https://placehold.co/20x20/9682B9/9682B9.png) | Lavender | `#9682B9` | Dark-mode accent, focus rings, countdowns |
 
 - **Type:** Instrument Serif for headlines (with italics for emphasis), Inter for interface text, JetBrains Mono for numbers, dates and booking references.
-- **Layout:** a 1,240 px grid, 1 px hairline dividers, consistent 20 px radii and generous spacing — closer to a ticketing product than a template.
+- **Layout:** a 1,240 px grid, 1 px hairline dividers, 14–16 px radii and generous spacing. Event cards are image, date line, title, description, venue and price, without boxes or per-card buttons.
+- **Restraint:** flat colour only (no gradients or glows), one accent per theme, real data only (every number on the page comes from the API), and plain copy.
 - **Motion:** spring-based tab indicators, staggered card entrances, scroll reveals and the DriftWall — all reduced automatically for people who prefer less motion.
 - **React Bits components** were added with the shadcn CLI (`npx shadcn@latest add @react-bits/<Name>-JS-CSS`, registry in `frontend/components.json`) and are vendored in `frontend/src/components/`. Each one is wrapped in a small themed component so it follows the palette and the light/dark switch:
 
@@ -87,17 +88,17 @@ A full-stack event platform built with React, Tailwind CSS, Express and MongoDB 
 
 | Requirement | Where |
 | --- | --- |
-| Attractive hero section | `pages/Home.jsx` — editorial headline, search with city filter, popular shortcuts |
-| Upcoming & featured events | DriftWall showcase, *Handpicked for this season* (category tabs), *What’s on, week by week* calendar |
+| Attractive hero section | `pages/Home.jsx` — editorial headline, search with city filter, a live *Next up* countdown and the DriftWall |
+| Upcoming & featured events | *Featured this season* (category tabs), *What’s on, week by week* calendar, DriftWall in the hero |
 | Event cards with name, date, venue, image, description | `components/events.jsx` → `EventCard` and `AgendaRow` |
 | Browse, search, filter by category | `pages/Events.jsx` — debounced search, multi-category, date, price, city, sort, grid/list, pagination |
 | Event details with a registration option | `pages/EventDetail.jsx` — overview, schedule, venue map, FAQ, sticky booking card |
 | Form with name, email, phone and selected event | `pages/Checkout.jsx` — event selector, name, email, +91 mobile, optional city, seats |
 | JavaScript form validation | `lib/validation.js` (unit tested) — on blur, live after first touch, per step, focus moves to the first problem |
-| Confirmation message | Success banner, confetti and a QR pass on `/bookings/:reference` |
+| Confirmation message | Confirmation banner and a QR pass on `/bookings/:reference` |
 | Responsive on phones, tablets and desktops | Mobile menu, slide-over filters, sticky mobile booking bar, fluid type |
 | **Bonus:** dark/light mode | `hooks/theme.jsx` — saved preference, cross-fade via the View Transitions API |
-| **Bonus:** countdown timers | Booking card, *Next up* card, pass page and every upcoming booking |
+| **Bonus:** countdown timers | Booking card, *Next up* line in the hero, pass page and every upcoming booking |
 | **Bonus:** animations | Motion (Framer Motion), React Bits (DriftWall, AnimatedList, GlassSurface, SpecularButton, SlideCommit, HoldButton), Lenis smooth scrolling |
 | **Bonus:** Local Storage registrations | `lib/bookings-store.js` + My Bookings — view, cancel, sync, export CSV/JSON, import, clear |
 | Git, GitHub, deployment, README | This repository, CI on every push, Vercel + Render + MongoDB Atlas |
@@ -119,7 +120,7 @@ The API repeats every check with Zod, and seat reservation is atomic, so two peo
 
 | Layer | Tools |
 | --- | --- |
-| Frontend | React 19, Vite 8, Tailwind CSS 4, React Router 7, TanStack Query 5, Motion, Lenis, Sonner, qrcode.react, canvas-confetti, Lucide icons |
+| Frontend | React 19, Vite 8, Tailwind CSS 4, React Router 7, TanStack Query 5, Motion, Lenis, Sonner, qrcode.react, Lucide icons |
 | UI components | React Bits **DriftWall, AnimatedList, GlassSurface, SpecularButton, SlideCommit, HoldButton** (installed with the shadcn CLI) |
 | Backend | Node.js 22, Express 5, Mongoose 9, Zod 4, google-auth-library, JSON Web Tokens, Helmet, express-rate-limit |
 | Database | MongoDB Atlas (AWS Singapore) |
@@ -232,7 +233,7 @@ npm run dev                   # http://localhost:5173 — /api is proxied to :50
 | | |
 | --- | --- |
 | ![Home — dark](docs/screenshots/home-dark.jpg) | ![Home — light](docs/screenshots/home-light.jpg) |
-| ![DriftWall showcase](docs/screenshots/showcase-dark.jpg) | ![Featured events](docs/screenshots/featured-dark.jpg) |
+| ![Featured events](docs/screenshots/featured-dark.jpg) | ![Calendar](docs/screenshots/calendar-dark.jpg) |
 | ![Events with filters](docs/screenshots/events-light.jpg) | ![Event details](docs/screenshots/event-dark.jpg) |
 | ![Checkout](docs/screenshots/checkout-dark.jpg) | ![QR pass](docs/screenshots/pass-dark.jpg) |
 

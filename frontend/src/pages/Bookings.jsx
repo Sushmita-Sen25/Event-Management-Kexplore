@@ -53,12 +53,12 @@ function BookingRow({ booking, onCancel, cancelling }) {
           )}
         </div>
         <div className="flex flex-wrap gap-2 sm:flex-col sm:items-stretch">
-          <ButtonLink to={`/bookings/${booking.reference}`} size="sm" variant="inverse">
+          <ButtonLink to={`/bookings/${booking.reference}`} size="sm" variant="outline">
             <Ticket className="size-4" /> View pass
           </ButtonLink>
           {group === 'upcoming' && (
             <>
-              <Button size="sm" variant="outline" onClick={() => addToCalendar(event, booking.reference)}>
+              <Button size="sm" variant="ghost" onClick={() => addToCalendar(event, booking.reference)}>
                 <CalendarPlus className="size-4" /> Calendar
               </Button>
               <CancelHold disabled={cancelling} onHold={() => onCancel(booking)} />
@@ -117,7 +117,7 @@ export default function Bookings() {
       bookingsStore.merge([updated]);
       queryClient.invalidateQueries({ queryKey: ['events'] });
       queryClient.invalidateQueries({ queryKey: ['event'] });
-      toast.success('Booking cancelled — your seats were released');
+      toast.success('Booking cancelled. Your seats have been released.');
     } catch (err) {
       toast.error(err.message);
     } finally {
@@ -144,31 +144,30 @@ export default function Bookings() {
   return (
     <>
       <title>My bookings · EventSphere</title>
-      <section className="border-b border-line bg-panel">
-        <div className="shell flex flex-col gap-6 py-12 lg:flex-row lg:items-end lg:justify-between">
+      <section className="shell">
+        <div className="flex flex-col gap-6 border-b border-line pb-8 pt-14 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="eyebrow">Your account</p>
-            <h1 className="display mt-3 text-5xl sm:text-6xl">My bookings</h1>
+            <h1 className="display text-5xl sm:text-6xl">My bookings</h1>
             <p className="mt-3 flex flex-wrap items-center gap-3 text-sm text-subtle">
               <span className="inline-flex items-center gap-1.5"><HardDrive className="size-4" /> Saved in this browser’s Local Storage</span>
               {user ? (
                 <span className="inline-flex items-center gap-1.5 text-success"><Cloud className="size-4" /> Synced with {user.email}</span>
               ) : (
-                <span>· Sign in with Google to sync across devices</span>
+                <span>Sign in with Google to see them on other devices.</span>
               )}
             </p>
           </div>
-          <div className="flex flex-wrap gap-2">
-            <Button variant="outline" size="sm" onClick={() => sync(true)} loading={syncing}>
+          <div className="-mx-2 flex flex-wrap gap-1 lg:shrink-0 lg:justify-end">
+            <Button variant="ghost" size="sm" onClick={() => sync(true)} loading={syncing}>
               {!syncing && <RefreshCw className="size-4" />} Refresh
             </Button>
-            <Button variant="outline" size="sm" disabled={!bookings.length} onClick={() => download(`eventsphere-bookings-${stamp}.csv`, toCsv(bookings), 'text/csv')}>
-              <Download className="size-4" /> CSV
+            <Button variant="ghost" size="sm" disabled={!bookings.length} onClick={() => download(`eventsphere-bookings-${stamp}.csv`, toCsv(bookings), 'text/csv')}>
+              <Download className="size-4" /> Export CSV
             </Button>
-            <Button variant="outline" size="sm" disabled={!bookings.length} onClick={() => download(`eventsphere-bookings-${stamp}.json`, JSON.stringify({ app: 'eventsphere', exportedAt: new Date().toISOString(), bookings }, null, 2), 'application/json')}>
-              <FileJson className="size-4" /> JSON
+            <Button variant="ghost" size="sm" disabled={!bookings.length} onClick={() => download(`eventsphere-bookings-${stamp}.json`, JSON.stringify({ app: 'eventsphere', exportedAt: new Date().toISOString(), bookings }, null, 2), 'application/json')}>
+              <FileJson className="size-4" /> Export JSON
             </Button>
-            <Button variant="outline" size="sm" onClick={() => fileInput.current?.click()}>
+            <Button variant="ghost" size="sm" onClick={() => fileInput.current?.click()}>
               <Upload className="size-4" /> Import
             </Button>
             <input
@@ -183,8 +182,9 @@ export default function Bookings() {
               }}
             />
             <Button
-              variant="danger"
+              variant="ghost"
               size="sm"
+              className="text-danger hover:bg-danger/10 hover:text-danger"
               disabled={!bookings.length}
               onClick={() => {
                 if (!clearArmed) return setClearArmed(true);
@@ -210,7 +210,7 @@ export default function Bookings() {
         <div className="mt-8">
           {groups[tab].length === 0 ? (
             <EmptyState icon={Ticket} title={tab === 'upcoming' ? 'No upcoming bookings' : `No ${tab} bookings`} action={<BrowseButton size="md" />}>
-              {tab === 'upcoming' ? 'When you book an event, your pass appears here — even offline.' : 'Nothing to show here yet.'}
+              {tab === 'upcoming' ? 'When you book an event, your pass appears here. It opens offline too.' : 'Nothing to show here yet.'}
             </EmptyState>
           ) : (
             <ul className="space-y-4">

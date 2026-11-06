@@ -15,7 +15,7 @@ const SKINS = {
     '--al-frame': 'rgb(34 25 50 / 0.55)',
     '--al-frame-edge': 'rgb(150 130 185 / 0.16)',
     '--al-frame-highlight': 'rgb(255 255 255 / 0.05)',
-    '--al-frame-shadow': '0 40px 80px -40px rgb(84 21 51 / 0.75), 0 8px 20px -12px rgb(0 0 0 / 0.6)',
+    '--al-frame-shadow': 'none',
     '--al-tile': 'linear-gradient(180deg, #251b35 0%, #1a1222 100%)',
     '--al-tile-edge': 'rgb(150 130 185 / 0.12)',
     '--al-tile-highlight': 'rgb(255 255 255 / 0.06)',
@@ -32,7 +32,7 @@ const SKINS = {
     '--al-frame': 'rgb(255 255 255 / 0.6)',
     '--al-frame-edge': 'rgb(34 25 50 / 0.08)',
     '--al-frame-highlight': '#ffffff',
-    '--al-frame-shadow': '0 40px 80px -44px rgb(114 37 72 / 0.4), 0 8px 20px -14px rgb(34 25 50 / 0.2)',
+    '--al-frame-shadow': 'none',
     '--al-tile': 'linear-gradient(180deg, #ffffff 0%, #faf6fb 100%)',
     '--al-tile-edge': 'rgb(34 25 50 / 0.08)',
     '--al-tile-highlight': '#ffffff',
@@ -54,7 +54,7 @@ function AgendaItem({ event, booked, selected }) {
       <span className="grid h-16 place-items-center rounded-xl bg-[var(--al-well)] text-center leading-none">
         <span>
           <span className="display block text-3xl">{dayNumber(event.startsAt)}</span>
-          <span className="mt-1 block font-mono text-[9.5px] tracking-[0.14em] text-[var(--al-muted)]">
+          <span className="mt-1 block text-[10px] tracking-wide text-[var(--al-muted)]">
             {monthShort(event.startsAt)} · {weekdayShort(event.startsAt).toUpperCase()}
           </span>
         </span>
@@ -118,8 +118,8 @@ export function AgendaList({ events, maxHeight = 560 }) {
         accentColor={dark ? '#9682B9' : '#722548'}
         width="100%"
         maxHeight={maxHeight}
-        radius={18}
-        gap={8}
+        radius={14}
+        gap={6}
         fadeSize={64}
         stagger={0.04}
         className="es-agenda"
@@ -130,11 +130,6 @@ export function AgendaList({ events, maxHeight = 560 }) {
           <AgendaItem event={event} booked={bookedIds.has(event.id)} selected={selected} />
         )}
       />
-      <p className="mt-3 hidden px-2 text-xs text-subtle sm:block">
-        <kbd className="rounded border border-line px-1 font-mono">↑</kbd>{' '}
-        <kbd className="rounded border border-line px-1 font-mono">↓</kbd> to move,{' '}
-        <kbd className="rounded border border-line px-1 font-mono">Enter</kbd> to open. Scroll the list for more dates.
-      </p>
     </div>
   );
 }

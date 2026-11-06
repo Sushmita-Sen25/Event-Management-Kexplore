@@ -44,9 +44,9 @@ export const SORTS = [
 ];
 
 export const FAQS = [
-  { q: 'Do I need an account to book?', a: 'No. Fill in your name, email and mobile number and your ticket is ready instantly. Signing in with Google simply pre-fills your details and keeps bookings in sync across devices.' },
+  { q: 'Do I need an account to book?', a: 'No. Enter your name, email and mobile number and your pass is ready straight away. Signing in with Google fills in your details and keeps your bookings in sync across devices.' },
   { q: 'Where are my tickets stored?', a: 'Every booking is saved in this browser’s Local Storage, so tickets open offline. They are also stored securely on our servers, and you can export them as CSV or JSON from My Bookings.' },
-  { q: 'Can I cancel a booking?', a: 'Yes — open My Bookings and choose Cancel. Your seats are released straight away so someone else can take them.' },
+  { q: 'Can I cancel a booking?', a: 'Yes. Open My Bookings and press and hold Hold to cancel on the booking. Your seats are released straight away so someone else can take them.' },
   { q: 'How many seats can I book?', a: 'Up to six seats per booking, as long as the event still has space. One booking per email address per event.' },
   { q: 'Is payment taken online?', a: 'Not in this version. Your booking reserves the seats and the amount shown is paid at the venue.' },
   { q: 'What do I show at the entrance?', a: 'The QR pass on your booking page, either on your phone or printed. The booking reference works too.' },
