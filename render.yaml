@@ -19,4 +19,4 @@ services:
       - key: GOOGLE_CLIENT_ID
         sync: false
       - key: ALLOWED_ORIGINS
-        value: https://eventsphere-events.vercel.app,https://eventsphere-swart-tau.vercel.app
+        value: https://eventique-events.vercel.app,https://eventsphere-events.vercel.app,https://eventsphere-swart-tau.vercel.app

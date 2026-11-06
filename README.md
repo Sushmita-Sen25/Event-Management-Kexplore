@@ -7,7 +7,7 @@
 **Discover, book and manage events across India.**
 A full-stack event platform built with React, Tailwind CSS, Express and MongoDB Atlas.
 
-[**Live site → eventsphere-events.vercel.app**](https://eventsphere-events.vercel.app) ·
+[**Live site → eventique-events.vercel.app**](https://eventique-events.vercel.app) ·
 [API health](https://eventsphere-api-dbb6.onrender.com/api/health) ·
 [Screenshots](#-screenshots) ·
 [Run it locally](#%EF%B8%8F-run-it-locally)
@@ -179,7 +179,7 @@ flowchart LR
 
 ## 🔌 API
 
-Base URL: `https://eventsphere-events.vercel.app/api`
+Base URL: `https://eventique-events.vercel.app/api`
 
 | Method | Path | Purpose |
 | --- | --- | --- |
@@ -231,7 +231,7 @@ npm run dev                   # http://localhost:5173 — /api is proxied to :50
 
 | Part | Where | Notes |
 | --- | --- | --- |
-| Web app | [Vercel](https://eventsphere-events.vercel.app) | Built from `frontend/` via `vercel.json`; `/api/*` rewritten to Render; `VITE_GOOGLE_CLIENT_ID` set in the project |
+| Web app | [Vercel](https://eventique-events.vercel.app) | Built from `frontend/` via `vercel.json`; `/api/*` rewritten to Render; `VITE_GOOGLE_CLIENT_ID` set in the project. The earlier address, eventsphere-events.vercel.app, still serves the same deployment |
 | API | [Render](https://eventsphere-api-dbb6.onrender.com/api/health) | Free web service in Singapore, `rootDir: backend`, health check `/api/health` |
 | Database | MongoDB Atlas | `eventsphere` database with its own least-privilege user |
 | Keep-alive | GitHub Actions | Pings the API every 10 minutes so the free instance stays warm |
