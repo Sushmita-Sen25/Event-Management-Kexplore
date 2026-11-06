@@ -3,7 +3,7 @@ import { ArrowLeft, CalendarPlus, CheckCircle2, Printer, Ticket } from 'lucide-r
 import { motion } from 'motion/react';
 import { QRCodeSVG } from 'qrcode.react';
 import { Link, useParams, useSearchParams } from 'react-router';
-import { Button, ButtonLink, Countdown, EmptyState, Skeleton } from '@/components/ui';
+import { Button, ButtonLink, Countdown, EmptyState, LogoMark, Skeleton } from '@/components/ui';
 import { useLocalBookings } from '@/hooks/data';
 import { api } from '@/lib/api';
 import { bookingsStore, fromApi } from '@/lib/bookings-store';
@@ -19,7 +19,7 @@ function Pass({ booking }) {
       <div className="grid md:grid-cols-[1fr_260px]">
         <div className="p-7 sm:p-9">
           <div className="flex items-center justify-between">
-            <span className="display text-xl leading-none">Eventique</span>
+            <span className="inline-flex items-center gap-1.5"><LogoMark className="size-6" /><span className="display text-xl leading-none">Eventique</span></span>
             <span className="text-xs uppercase tracking-[0.12em] text-ink/70">Admit {booking.seats}</span>
           </div>
           <h2 className="display mt-8 text-4xl sm:text-5xl">{event.title}</h2>

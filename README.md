@@ -75,6 +75,7 @@ A full-stack event platform built with React, Tailwind CSS, Express and MongoDB 
 
 Every swatch is a light pink, so none of them can carry text on a light background (hot pink on blush is about 2.4:1). Pinks are used as fills, with deep berry ink (`#2A1320`) for text on them, and accent text in the light theme is hot pink deepened to `#B8276F` (5.6:1). Every text/background pair in both themes meets WCAG AA.
 
+- **Logo:** an admission ticket with notched sides carrying a lowercase “e”, in hot pink and berry ink. The artwork lives in `frontend/public/favicon.svg`, the `LogoMark` component and the 180 px `apple-touch-icon.png` for phone home screens.
 - **Type:** Instrument Serif for headlines (with italics for emphasis), Inter for interface text, JetBrains Mono for numbers, dates and booking references.
 - **Layout:** a 1,240 px grid, 1 px hairline dividers, 14–16 px radii and generous spacing. Event cards are image, date line, title, description, venue and price, without boxes or per-card buttons.
 - **Restraint:** flat colour only (no gradients or glows), one accent per theme, real data only (every number on the page comes from the API), and plain copy.

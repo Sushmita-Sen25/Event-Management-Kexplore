@@ -72,14 +72,27 @@ export function Badge({ tone = 'neutral', className, children }) {
 }
 
 /* ---------------------------------------------------------------- Layout helpers */
-/** Wordmark: a small solid mark and the name set in the display serif. */
+/**
+ * Brand mark: a hot-pink admission ticket (notched sides) carrying a lowercase "e".
+ * Same artwork as public/favicon.svg.
+ */
+export function LogoMark({ className }) {
+  return (
+    <svg viewBox="0 0 32 32" className={cn('size-7 shrink-0', className)} aria-hidden>
+      <path
+        fill="#ff69b4"
+        d="M6.5 4h19a4.5 4.5 0 0 1 4.5 4.5v4.1a3.4 3.4 0 0 0 0 6.8v4.1a4.5 4.5 0 0 1-4.5 4.5h-19A4.5 4.5 0 0 1 2 23.5v-4.1a3.4 3.4 0 0 0 0-6.8V8.5A4.5 4.5 0 0 1 6.5 4Z"
+      />
+      <path fill="none" stroke="#2a1320" strokeWidth="3" strokeLinecap="round" d="M10 16h12a6 6 0 1 0-1.4 3.86" />
+    </svg>
+  );
+}
+
+/** Logo: the ticket mark and the name set in the display serif. */
 export function Logo({ className }) {
   return (
     <Link to="/" className={cn('inline-flex items-center gap-2', className)} aria-label="Eventique home">
-      <svg viewBox="0 0 20 20" className="size-[18px] text-accent" aria-hidden>
-        <circle cx="10" cy="10" r="8.25" fill="none" stroke="currentColor" strokeWidth="2.5" />
-        <circle cx="10" cy="10" r="3" fill="currentColor" />
-      </svg>
+      <LogoMark />
       <span className="display text-[1.6rem] leading-none tracking-[-0.01em]">Eventique</span>
     </Link>
   );
