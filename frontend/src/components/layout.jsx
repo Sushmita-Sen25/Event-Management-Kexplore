@@ -239,7 +239,7 @@ function Newsletter() {
 const FOOTER_LINKS = [
   ['Explore', [['All events', '/events'], ['This week', '/events?when=week'], ['Free events', '/events?price=free'], ['Past events', '/events?when=past']]],
   ['Bookings', [['My bookings', '/bookings'], ['Calendar view', '/events?view=list']]],
-  ['About', [['Privacy policy', '/privacy'], ['Terms of service', '/terms'], ['Source code', 'https://github.com/Sushmita-Sen25/Event_mangement_website']]],
+  ['About', [['Privacy policy', '/privacy'], ['Terms of service', '/terms'], ['Source code', 'https://github.com/Sushmita-Sen25/Event-Management-Kexplore']]],
 ];
 
 function Footer() {

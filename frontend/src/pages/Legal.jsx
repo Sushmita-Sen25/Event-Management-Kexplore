@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 
 const UPDATED = '6 November 2026';
-const REPO = 'https://github.com/Sushmita-Sen25/Event_mangement_website';
+const REPO = 'https://github.com/Sushmita-Sen25/Event-Management-Kexplore';
 
 const PAGES = {
   privacy: {

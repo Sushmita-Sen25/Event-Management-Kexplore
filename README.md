@@ -204,8 +204,8 @@ Validation errors return `422` with per-field messages, for example `{ "message"
 You need Node.js 20.12+, a MongoDB connection string and a Google OAuth *Web* client ID with `http://localhost:5173` as an authorised JavaScript origin.
 
 ```bash
-git clone https://github.com/Sushmita-Sen25/Event_mangement_website.git
-cd Event_mangement_website
+git clone https://github.com/Sushmita-Sen25/Event-Management-Kexplore.git
+cd Event-Management-Kexplore
 
 # API
 cd backend
