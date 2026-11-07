@@ -1,6 +1,11 @@
 {
   "name": "eventsphere-api",
   "version": "2.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sushmita-Sen25/Event-Management-Kexplore.git",
+    "directory": "backend"
+  },
   "private": true,
   "description": "EventSphere REST API — events, bookings, Google sign-in and newsletter on MongoDB Atlas.",
   "type": "module",
